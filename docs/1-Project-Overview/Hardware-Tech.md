@@ -1,3 +1,17 @@
+---
+
+---
+
+## Hardware stack
+
+### Raspbery Pi
+
+### Power & Cabling
+
+
+
+## Technology stack
+
 Hardware setup
 - list of componenets
   - Rapberry Pi

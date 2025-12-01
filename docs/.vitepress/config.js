@@ -8,7 +8,6 @@ export default withMermaid(
         title: 'Kube documentation', // The title of your documentation site
         description: 'Documentation for the Baremetal kubernetes setup', // A brief description of your site
         base: '/kube-service/', // url path base
-
         // Theme configuration
         themeConfig: {
             outline: 'deep',
@@ -53,8 +52,20 @@ export default withMermaid(
                             {text: 'k3s Setup', link: '/5-Kubernetes/k3s-Setup' },
                             ],
                     },
+                    {
+                    text: 'Sample',
+                    collapsed: false,
+                    items: [
+                            {text: 'Sample', link: '/00-sample/sample' },
+                            ],
+                    },
                 ],
 
             },
+        markdown: {
+          toc: false,
+          math: true,
+          mermaid: true
+        },
      },)
 )
