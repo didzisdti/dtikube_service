@@ -1,0 +1,1 @@
+information about k3s cluster network

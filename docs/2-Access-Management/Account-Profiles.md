@@ -1,0 +1,11 @@
+Brief description on users utilised accross varios platform activities
+- covering per account details
+  - why account is created (Main purpose, to action what?)
+  - what level of rights account has (admin rights, sudo, read/write, only read, etc.)
+  - which service is using it (k3s, github, anisble, etc.)
+  - password and key management option (key less, passwordless, etc.)
+  - Security features ()
+    - access monitoring (is access monitored? how its reported?)
+    - key or password expiry
+    - Passsword Lenght if enanbled
+    - 
