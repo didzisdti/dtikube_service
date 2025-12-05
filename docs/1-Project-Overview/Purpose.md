@@ -4,9 +4,6 @@
 
 ---
 
-
-
-<!-- Title styling options--> 
 # {{ $frontmatter.title }}
 
 (logo) 

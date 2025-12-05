@@ -18,8 +18,8 @@ export default withMermaid(
                     collapsed: true,
                     items: [
                             {text: 'Purpose', link: '/1-Project-Overview/Purpose' },
-                            {text: 'Architecture Design', link: '/1-Project-Overview/Architecture-Design' },
-                            {text: 'Hardware & Tech', link: '/1-Project-Overview/Hardware-Tech' },
+                            {text: 'Architecture Setup', link: '/1-Project-Overview/Architecture-Design' },
+                            {text: 'Technology Stack', link: '/1-Project-Overview/Technology' },
                             ],
                     },
                     {
