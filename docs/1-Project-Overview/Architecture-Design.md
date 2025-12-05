@@ -56,13 +56,3 @@ The project hardware setup details each element, required to build a small clust
 
 ## Network topology 
 
-
-## Technology stack
-
-
-
-
-
-examples of technologies used and where to learn more about it
-
-k3s, Arco CD, Ansible
