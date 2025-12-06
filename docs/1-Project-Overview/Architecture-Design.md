@@ -8,11 +8,28 @@
 
 (logo)
 
+## Architecture Overview
+The setup of my lab is based on single board computers (SBC), in our case focus in on Rasspebbry Pi 4B for both cluster and the gateway server, a laptop as a control node for connecting and managing the setup, a home router to allow internet access and a switch to enable network segregation.
+
+
+<p align="center">
+    <img alt="pikube-logo" src="../Graphics/arc.drawio.svg" width="80%">
+</p>
+
+## Network topology 
+
+| Network area | IP address |   Purpose  |  Unit |   OS  | Hardware  |  RAM  |  
+|--------------|------------|------------|-------|-------|-----------|-------|
+| Home  | 192.168.1.1 | Internet access | Home Router | - |- | - |
+| Home  | 192.168.1.x | Control node | Laptop | Windows |RogStrix | 16 GB |
+| Home  | 192.168.1.10, 10.0.0.1 | Gateway Server | SBC | Ubuntu 25.10 | Raspberry Pi 4B | 8 GB|
+|  LAN  | 10.0.0.5 | Kubernetes master | SBC | Ubuntu 25.10 | Raspberry Pi 4B | 8 GB|
+|  LAN   | 10.0.0.10 | Kubernetes worker | SBC | Ubuntu 25.10 | Raspberry Pi 4B | 8 GB|
+|  LAN   | 10.0.0.11 | Kubernetes worker | SBC | Ubuntu 25.10 | Raspberry Pi 4B | 8 GB|
+
 ## :hammer_and_wrench: Hardware
 
 The project hardware setup details each element, required to build a small cluster, from power management and cabling to processing boards and physcial cluster rack assembly.
-
-(arc diagram)
 
 
 ### Processing board: Raspberry Pi 4B
@@ -54,5 +71,7 @@ The project hardware setup details each element, required to build a small clust
 * **Cooling Fan:** Mounted on top of each board in the cluster
 * **Idividual Heatsinks:** Alluminium heatsinks applied on Processor, RAM, USB controller and Ethernet controller
 
-## Network topology 
+## Control Node
+A Windows Subsystem for Linux (WSL) with Ubuntu OS installed on a laptop. Main access point for all server configuration managment through SSH key access.
+
 
