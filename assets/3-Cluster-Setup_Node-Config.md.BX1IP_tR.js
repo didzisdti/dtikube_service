@@ -3,7 +3,7 @@ import{_ as n,c as t,o as e,j as i,a0 as l,a as p,t as h}from"./chunks/framework
 <span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"># System Configuration</span></span>
 <span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D;">timezone</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">Europe/London</span></span>
 <span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D;">locale</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">en_GB.UTF-8</span></span>
-<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D;">hostname</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">berry01</span></span>
+<span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D;">hostname</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">berry01git</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;"> </span></span>
 <span class="line"><span style="--shiki-light:#22863A;--shiki-dark:#85E89D;">manage_etc_hosts</span><span style="--shiki-light:#24292E;--shiki-dark:#E1E4E8;">: </span><span style="--shiki-light:#032F62;--shiki-dark:#9ECBFF;">localhost</span></span>
 <span class="line"></span>
 <span class="line"><span style="--shiki-light:#6A737D;--shiki-dark:#6A737D;"># User Account Configuration</span></span>
