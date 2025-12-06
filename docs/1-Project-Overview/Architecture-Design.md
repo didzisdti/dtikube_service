@@ -8,7 +8,7 @@
 
 (logo)
 
-## Architecture Overview
+## :eye: Architecture Overview
 The setup of my lab is based on single board computers (SBC), in our case focus in on Rasspebbry Pi 4B for both cluster and the gateway server, a laptop as a control node for connecting and managing the setup, a home router to allow internet access and a switch to enable network segregation.
 
 
@@ -16,7 +16,7 @@ The setup of my lab is based on single board computers (SBC), in our case focus 
     <img alt="pikube-logo" src="../Graphics/arc.drawio.svg" width="80%">
 </p>
 
-## Network topology 
+## :memo: Infrastructure and Network topology 
 
 | Network area | IP address |   Purpose  |  Unit |   OS  | Hardware  |  RAM  |  
 |--------------|------------|------------|-------|-------|-----------|-------|
