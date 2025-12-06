@@ -5,6 +5,12 @@ on:
     branches:
       - main  
 
+
+permissions:
+  contents: write      # allows pushing to the repo
+  pages: write         # allows configuring GitHub Pages
+  id-token: write      # needed for secure deployments (recommended)
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -30,7 +36,7 @@ jobs:
 
         #deploy page on github pages
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v7
+        uses: peaceiris/actions-gh-pages@v5
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: docs/.vitepress/dist
