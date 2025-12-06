@@ -7,7 +7,7 @@ export default withMermaid(
         ({  // Metadata
         title: 'Kube documentation', // The title of your documentation site
         description: 'Documentation for the Baremetal kubernetes setup', // A brief description of your site
-        base: '/kube-service/', // url path base
+        base: '/', // url path base
         // Theme configuration
         themeConfig: {
             outline: 'deep',
