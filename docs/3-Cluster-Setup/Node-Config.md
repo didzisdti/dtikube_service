@@ -29,7 +29,7 @@ Replace all content of user-data below content
 # System Configuration
 timezone: Europe/London
 locale: en_GB.UTF-8
-hostname: berry01
+hostname: berry01git 
 manage_etc_hosts: localhost
 
 # User Account Configuration
