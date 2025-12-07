@@ -7,7 +7,7 @@ hero:
   text: Setup Guide & Documentation 
   tagline: Deploy, manage, and scale your Pi-based K3s cluster with ease
   image: 
-    src: Graphics/education.png
+    src: /education.png
 
   actions:
       - theme: brand
@@ -19,15 +19,15 @@ hero:
 
 features:
   - icon:
-      src: Graphics/book.png
+      src: /book.png
     title: Content Library
     details: Learn the lifecycle of cluster managment from hardware provisioning and configuration to orchestration and service deployment.
   - icon:
-      src: Graphics/automation.png
+      src: /automation.png
     title: Automation
     details: Automate each server. OS setup on baremetal, automated and seamless deployment of cluster nodes using Ansible and cloud-init.
   - icon:
-      src: Graphics/resilience.png
+      src: /resilience.png
     title: Resillience
     details: Maintain ressillience and availability of the service through use of encrpytion, secure netwrok practices, high availaiblity and load balancing as well as back up and restore in a scenario of full failure.
 ---
