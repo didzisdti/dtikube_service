@@ -7,7 +7,7 @@ hero:
   text: Setup Guide & Documentation 
   tagline: Deploy, manage, and scale your Pi-based K3s cluster with ease
   image: 
-    src: /education.png
+    src: Graphics/education.png
 
   actions:
       - theme: brand
