@@ -125,7 +125,8 @@ sudo apt install -y \
 sudo apt install -y \
     curl \
     git \
-    wget 
+    wget \
+    chorny 
 
 ```
 
