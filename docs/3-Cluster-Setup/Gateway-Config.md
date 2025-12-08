@@ -6,7 +6,9 @@
 
 # {{ $frontmatter.title }}
 
-(logo)
+<p align="center">
+    <img alt="pikube-logo" src="../Graphics/gateway.svg" width="25%">
+</p>
 
 ## Getway Setup
 Central component in the architecture, controlling all the traffing, connecting to internet and acting as DNS, DCHP and firewall server. Cluster is accessed using gateway as a jump server.
@@ -14,10 +16,15 @@ Central component in the architecture, controlling all the traffing, connecting 
 ### Gateway node
 * **`berryX`** : RaspberryPi 4B, 8GB
 
-## Network configuration
-The network is segregated in 2 parts
-* **Home Network Endpoint:** 192.168.1.10/24 Wifi connectiong to home internet router
-* **Cluster Network Endpoint:** 10.0.0.1 cable setup into LAN switch
+## OS deployment
+The gateway node runs on the latest Ubuntu 25.10 server. The process for setting up your OS on Raspebbry Pi can be done in following steps.
+
+1. Download and install microSD Imager: [Raspberry Pi Imager](https://ubuntu.com/download/raspberry-pi)
+
+2. Flash the MicroSD card with desired OS type and version
+
+3. Update cloud-init config files: `user-data` and `network-config` 
+
 
 ## Cloud-init configuration
 
@@ -112,6 +119,7 @@ sudo apt update && sudo apt full-upgrade -y
 sudo apt install -y \
     dnsmasq \
     nftables \
+    net-tools 
 
 #system packages
 sudo apt install -y \
@@ -120,6 +128,11 @@ sudo apt install -y \
     wget 
 
 ```
+
+## Network configuration
+The network is segregated in 2 parts
+* **Home Network Endpoint:** 192.168.1.10/24 Wifi connectiong to home internet router
+* **Cluster Network Endpoint:** 10.0.0.1 cable setup into LAN switch
 
 ## DNS & DHCP configuration
 
@@ -218,3 +231,147 @@ nslookup google.com 10.0.0.1
 
 ```
 
+## Router Configuration
+LAN cluster by default cannot reach internet outside its local network area. To enable it gateway is configured to act as a router.
+
+```bash
+# Enable packet forwarding
+echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf
+
+# Apply fowarding changes now
+sudo sysctl -p
+
+# Verify setup
+cat /proc/sys/net/ipv4/ip_forward
+
+```
+With forwarding enabled, the traffic might still not reach intended destination. Lets look at firewall setup to ensure that router setup is working.
+
+
+## Firewall Configuration
+To configure our firewall settings `nftables` will be used as it is more modern and the successor for iptables config. All rules in theory can be defined in `/etc/nftables.conf` for a small and relatively static network setup.
+
+### Check Existing Setup
+```bash
+# Check nftables is installed. Use "enable" and "start" if not active.
+apt list --installed | grep nftables
+sudo systemctl status nftables
+
+# Check existing config of nftables
+cat /etc/nftables.conf
+```
+
+ The chosen setup features the professional approach of modular structure for nftables configuration, often used in production environments and has improved maintainability and scalaility. In addition the configuration files are numbered to guarantee loading order and provide predictability.
+
+ ### Creating Modular Structure
+
+```bash
+# Create main structure
+sudo mkdir /etc/nftables.d/
+sudo mkdir /etc/nftables.d/60-nat/
+
+# Creating main filtering rulesets and static
+sudo nano /etc/nftables.d/10-constants.nft
+sudo nano /etc/nftables.d/20-sets.nft
+sudo nano /etc/nftables.d/30-input.nft
+sudo nano /etc/nftables.d/40-forward.nft
+sudo nano /etc/nftables.d/50-output.nft
+
+# Creating NAT rulesets
+sudo nano /etc/nftables.d/60-nat/10-prerouting.nft
+sudo nano /etc/nftables.d/60-nat/20-postrouting.nft
+``` 
+
+
+### Update `/etc/nftables.conf`
+
+ ```bash
+#!/usr/sbin/nft -f
+# General Firewall settings
+# This config file is updated only once during intial creation
+
+# Clear ruleset before applying new
+flush ruleset
+
+# include all modular files
+include "/etc/nftables.d/*.nft"
+include "/etc/nftables.d/nat/*.nft"
+ ``` 
+
+### Create Constants Set `/etc/nftables.d/10-constants.nft`
+```bash
+# Network Interface Definitions
+define lan_if = eth0      # LAN network, listening local
+define wan_if = wlan0     # Home network, listening external
+
+# Network Address Ranges
+define lan_net = 10.0.0.0/24        # LAN local network
+define home_net = 192.168.1.0/24    # Home network
+```
+
+### Create Constants Set `/etc/nftables.d/20-sets.nft`
+```bash
+
+```
+
+### Incomming Traffic Rules `/etc/nftables.d/30-input.nft`
+```bash
+
+```
+
+### Create Constants Set `/etc/nftables.d/40-forward.nft`
+```bash
+
+```
+
+### Outgoing traffic Rules `/etc/nftables.d/50-output.nft`
+```bash
+# Ruleset for filtering outgoing traffic
+# Required to initiate package and system updates and communicate with external services
+
+# Configuration does not restrict outgoing traffic
+table ip filter {
+
+    chain output {
+        type filter hook output priority 0;
+        policy accept;
+    }
+}
+```
+
+### Create DNAT Ruleset `/etc/nftables.d/60-nat/10-prerouting.nft`
+```bash
+# Ruleset for DNAT (destination network address translation) and port forwarding
+
+table ip nat {
+
+    chain prerouting {
+        type nat hook prerouting priority -100;
+
+        #Custom string to help with high level analysis and limiting log input to not flood the logs
+        log prefix "[NAT PREROUTING]: " limit rate 5/minute burst 5 packets
+    }
+}
+
+#Example: port forwarding of external port 80 to internal destination
+# iifname $wan_if tcp dport 80 dnat 10.0.0.5.80
+```
+
+### Create SNAT Ruleset `/etc/nftables.d/60-nat/20-postrouting.nft`
+```bash
+# Ruleset for SNAT (source network address translation)
+# Important enabler for LAN cluster access to internet
+
+table ip nat {
+
+    chain postrouting {
+        type nat hook postrouting priority 100;
+
+        # Transform (masquarade) intnerl IPs 10.0.0.x into gteway external 192.168.1.x
+        oif $WAN_IF ip saddr $LAN_NET masquerade
+
+        #Custom string to help with high level analysis and limiting log input to not flood the logs
+        log prefix "[NAT POSTROUTING]: " limit rate 5/minute burst 5 packets
+    }
+}
+```

@@ -27,7 +27,7 @@ export default withMermaid(
                     collapsed: true,
                     items: [
                             {text: 'Account Profiles', link: '/2-Access-Management/Account-Profiles' },
-                            {text: 'Setup and Hardening', link: '/2-Access-Management/Setup-And-Hardening' },
+//                            {text: 'Setup and Hardening', link: '/2-Access-Management/Setup-And-Hardening' },
                             ],
                     },
                     {

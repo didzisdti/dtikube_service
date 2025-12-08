@@ -8,6 +8,7 @@
 
 
 ## Custer Setup
+The cluster currently consists of Raspberry Pi nodes with similar hardware settings.
 
 ### Mater node
 * **`berry01`** : RaspberryPi 4B, 8GB

@@ -6,12 +6,15 @@
 
 # {{ $frontmatter.title }}
 
+The focuses on exploring the capabilities and utilising open source technologies, wtih preference of projects from Could Cloud Native Computing Foundation [CNCF](https://www.cncf.io/projects/) ecosystem.
 
-| Purpose | Technology | Descriptipn |
+Target stack for our first milestone: Kube platform activation
+| Purpose |Technology | Descriptipn |
 |---------|------------|-------------|
-| Automation | Cloud-init | Initial OS configuration |
-| Orchestration | K3S | Lightweight Kubernetes distro |
-
+| Automation | <img src="../Graphics/cloud-init.svg" width="15%" style="display:inline; vertical-align:middle;"> [Cloud-init](https://cloudinit.readthedocs.io/en/latest/)  | Initial OS configuration |
+| Automation | <img src="../Graphics/ansible.svg" width="15%" style="display:inline; vertical-align:middle;"> [Ansible](https://cloudinit.readthedocs.io/en/latest/)  | Automates system configuration |
+| Orchestration | <img src="../Graphics/K3s.svg" width="15%" style="display:inline; vertical-align:middle;"> [K3S](https://k3s.guide/docs/welcome) | Lightweight Kubernetes distro |
+| ... | ... |  | ... |
 
 ...
 
