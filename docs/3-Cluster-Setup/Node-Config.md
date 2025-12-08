@@ -63,3 +63,14 @@ disable_root: true
 power_state:
   mode: reboot
 ```
+
+### After initial cloud-init bootup
+
+```bash
+# Run package update
+sudo apt update && sudo apt full-upgrade -y
+```
+
+<p align="center">
+    <img alt="pikube-logo" src="../Graphics/under-construction.svg" width="40%">
+</p>

@@ -375,3 +375,23 @@ table ip nat {
     }
 }
 ```
+
+## NTP Configuration
+
+Gateway server position to provide Network Time Protocol services using `chrony`, allowing seemless time accuracy accross the cluster. Recoomented for kubertenetes environment. 
+
+```bash
+# Check chrony is installed
+apt list --installed | grep chrony
+
+# Check current setup
+cat /etc/chrony/chrony.conf
+
+# Check current status, Use enable and start to activate.
+sudo systemctl status chrony
+
+```
+
+<p align="center">
+    <img alt="pikube-logo" src="../Graphics/under-construction.svg" width="40%">
+</p>

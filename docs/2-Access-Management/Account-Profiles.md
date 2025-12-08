@@ -22,3 +22,14 @@ Cluster setup currently is operating under main admin user: `berryadmin` which c
 | berryadmin | Control user | sudo | Only SSH | - | Linux, Kubernetes |
 | ... | ...
 
+## SSH Key Generation
+SSH (Secure Shell) keys provides a password less more secure, encrypted way to remotely access and control another computer over a network. 2 keys are generated, a public key that is shared with target server and private key which is not distributed and used to authenticate. [SSH Git](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
+
+```bash
+# Process to generate SSH key
+# Note it will prompt key location, name and passphase
+# Leave passphrase empty if you don't require autherntication each time you use the key
+ssh-keygen -t ed25519 -C "your_email@example.com"
+```
+
+Key pair with pivate key:`id_ed25519` and public key:`id_ed25519.pub` will be generated in ~/.ssh directory.
