@@ -6,7 +6,6 @@
 
 # {{ $frontmatter.title }}
 
-(logo) 
 
 ## :mag_right: Project Scope: Kubernetes Orchestrated Platform
 The project purpose is to explore, learn and build. Main actor in our home-lab will be lightweight Kubernetes cluster (k3s) that is resllient, fully automated and serves as a frontier to the exploration of modern technologies.

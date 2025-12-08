@@ -11,12 +11,12 @@
 </p>
 
 ## Getway Setup
-Central component in the architecture, controlling all the traffing, connecting to internet and acting as DNS, DCHP and firewall server. Cluster is accessed using gateway as a jump server.
+Central component in the architecture, controlling all the traffing, connecting to internet and acting as DNS, DCHP, NTP and firewall server. Cluster is accessed using gateway as a jump server.
 
 ### Gateway node
 * **`berryX`** : RaspberryPi 4B, 8GB
 
-## OS deployment
+## :cd: OS deployment
 The gateway node runs on the latest Ubuntu 25.10 server. The process for setting up your OS on Raspebbry Pi can be done in following steps.
 
 1. Download and install microSD Imager: [Raspberry Pi Imager](https://ubuntu.com/download/raspberry-pi)
@@ -26,7 +26,7 @@ The gateway node runs on the latest Ubuntu 25.10 server. The process for setting
 3. Update cloud-init config files: `user-data` and `network-config` 
 
 
-## Cloud-init configuration
+## :gear: Cloud-init configuration
 
 Using standard YAML formatted file for all nodes to setup default access point.
 
@@ -130,12 +130,12 @@ sudo apt install -y \
 
 ```
 
-## Network configuration
+## :globe_with_meridians: Network configuration
 The network is segregated in 2 parts
 * **Home Network Endpoint:** 192.168.1.10/24 Wifi connectiong to home internet router
 * **Cluster Network Endpoint:** 10.0.0.1 cable setup into LAN switch
 
-## DNS & DHCP configuration
+## :globe_with_meridians: DNS & DHCP configuration
 
 ### dnsmasq configuation
 
@@ -249,7 +249,7 @@ cat /proc/sys/net/ipv4/ip_forward
 With forwarding enabled, the traffic might still not reach intended destination. Lets look at firewall setup to ensure that router setup is working.
 
 
-## Firewall Configuration
+## :fire: Firewall Configuration
 To configure our firewall settings `nftables` will be used as it is more modern and the successor for iptables config. All rules in theory can be defined in `/etc/nftables.conf` for a small and relatively static network setup.
 
 ### Check Existing Setup
@@ -261,6 +261,9 @@ sudo systemctl status nftables
 # Check existing config of nftables
 cat /etc/nftables.conf
 ```
+
+> [!IMPORTANT]
+> Configuration references are key sensitive, for simplicity of setup suggestion is to keep it either all CAPS or all lowe case.
 
  The chosen setup features the professional approach of modular structure for nftables configuration, often used in production environments and has improved maintainability and scalaility. In addition the configuration files are numbered to guarantee loading order and provide predictability.
 
@@ -312,17 +315,59 @@ define home_net = 192.168.1.0/24    # Home network
 
 ### Create Constants Set `/etc/nftables.d/20-sets.nft`
 ```bash
-
+#Not yet defined
 ```
 
 ### Incomming Traffic Rules `/etc/nftables.d/30-input.nft`
 ```bash
+# Ruleset for incomming traffic
 
+table ip filter {
+
+    chain input {
+        # default drop all that does not match our ruleset
+        type filter hook input priority 0;
+        policy drop;
+
+        # Allow loopback interface for local services
+        iif "lo" accept
+
+        # Allow already established connections
+        ct state established,related accept
+
+        # Allow LAN access
+        iif $lan_if ip saddr 10.0.0.0/24 accept
+
+        # Allow SSH from trusted hosts
+        tcp dport 22 ip saddr 192.168.1.111 accept
+
+        # 5. Optional: allow ping from LAN
+        icmp type echo-request accept
+    }
+}
 ```
 
 ### Create Constants Set `/etc/nftables.d/40-forward.nft`
 ```bash
+# Rulseset for packets passing through the router
 
+table ip filter {
+    chain forward {
+        # default drop all that does not match our ruleset
+        type filter hook forward priority 0;
+        policy drop;
+
+        # Allow loopback interface for local services
+        ct state established,related accept
+
+        # Enable LAN → WAN access to internet services
+        iif $lan_if oif $wan_if accept
+
+        # Logging with custom string to help with high level analysis and limiting log input to not flood the logs
+        log prefix "[GATEWAY FORWARD DROP]: " limit rate 5/minute burst 5 packets
+
+    }
+}
 ```
 
 ### Outgoing traffic Rules `/etc/nftables.d/50-output.nft`
@@ -349,7 +394,7 @@ table ip nat {
     chain prerouting {
         type nat hook prerouting priority -100;
 
-        #Custom string to help with high level analysis and limiting log input to not flood the logs
+        # Logging with custom string to help with high level analysis and limiting log input to not flood the logs
         log prefix "[NAT PREROUTING]: " limit rate 5/minute burst 5 packets
     }
 }
@@ -369,17 +414,56 @@ table ip nat {
         type nat hook postrouting priority 100;
 
         # Transform (masquarade) intnerl IPs 10.0.0.x into gteway external 192.168.1.x
-        oif $WAN_IF ip saddr $LAN_NET masquerade
+        oif $wan_if ip saddr $lan_net masquerade
 
-        #Custom string to help with high level analysis and limiting log input to not flood the logs
+        # Logging with custom string to help with high level analysis and limiting log input to not flood the logs
         log prefix "[NAT POSTROUTING]: " limit rate 5/minute burst 5 packets
     }
 }
 ```
 
-## NTP Configuration
+### Post Checks
+```bash
+# Check syntax, useful check after config file edit(s)
+# Expected output: nothing,unless syntax issue it will throw error details
+sudo nft -c -f /etc/nftables.conf
 
-Gateway server position to provide Network Time Protocol services using `chrony`, allowing seemless time accuracy accross the cluster. Recoomented for kubertenetes environment. 
+#list all nftables ruleset 
+# Note that all constants will be replaced with actual values
+sudo nft list ruleset
+
+# List NAT ruleset
+sudo nft list table nat
+
+# Network traffic check from LAN node
+ping -c 3 192.168.1.1   #Home internet router IP
+ping -c 3 8.8.8.8       # External IP
+
+# check if specific ports are open. Example: ftp, SSH, domain, http, https
+nmap -p 21,22,53,80,443 10.0.0.1
+
+#check all ports in range 1-1000
+nmap -p 1-1000 10.0.0.1
+
+# Check firewall logs
+
+```
+
+
+
+## :clock3: NTP/NTS Configuration
+
+Gateway server is positioned to provide Network Time Protocol services using `chrony`, allowing seemless time accuracy accross the cluster. 
+
+::: info Why **`chrony`**? 
+* Moder, fast and high accuracy NTP service
+* Can safely handle large de-sync gaps
+* Included as default on many newer verson Linux distros, replacement of older version `ntpd`
+* Is recomended for orchestrated environment like kubernetes
+* Very low CPU and network resource consumption
+:::
+
+### Check Existing Setup
 
 ```bash
 # Check chrony is installed
@@ -393,6 +477,55 @@ sudo systemctl status chrony
 
 ```
 
-<p align="center">
-    <img alt="pikube-logo" src="../Graphics/under-construction.svg" width="40%">
-</p>
+### Create Server Structure
+```bash
+# Create config file for server side
+sudo nano /etc/chrony/conf.d/ntp-server.conf
+```
+
+### Server Configuration `/etc/chrony/conf.d/ntp-server.conf`
+
+```bash
+# Allow LAN clients to use this router as NTP server
+allow 10.0.0.0/24
+
+# Let router serve time even if internet goes down
+local stratum 10
+
+# Optional: Let LAN clients run readonly chronyc commands
+cmdallow 10.0.0.0/24
+```
+
+### Server Source Configuration `/etc/chrony/sources.d/ubuntu-ntp-pools.sources`
+Remains unchanged from original installed configuration version.
+```bash
+# Use NTS by default
+# NTS uses an additional port to negotiate security: 4460/tcp
+# The normal NTP port remains in use: 123/udp
+pool 1.ntp.ubuntu.com iburst maxsources 1 nts prefer
+pool 2.ntp.ubuntu.com iburst maxsources 1 nts prefer
+pool 3.ntp.ubuntu.com iburst maxsources 1 nts prefer
+pool 4.ntp.ubuntu.com iburst maxsources 1 nts prefer
+# The bootstrap server is needed by systems without a hardware clock, or a very
+# large initial clock offset. The specified certificate set is defined in
+# /etc/chrony/conf.d/ubuntu-nts.conf.
+pool ntp-bootstrap.ubuntu.com iburst maxsources 1 nts certset 1
+```
+
+### Test NTP/NTS Setup
+```bash
+# Restart chrony to load the new cofig
+sudo systemctl restart chrony
+
+# Check connection details
+chronyc -n sources
+# Look for an output srarting with ^* (source we are using)
+
+# View chrony activity
+chronyc activity
+
+# Check NTP clients connected to our server
+sudo chronyc clients
+#should see IP addresses from our local LAN 
+
+```

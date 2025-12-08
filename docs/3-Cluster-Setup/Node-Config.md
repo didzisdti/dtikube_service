@@ -18,7 +18,7 @@ The cluster currently consists of Raspberry Pi nodes with similar hardware setti
 * **`berryw12`** : RaspberryPi 4B, 8GB
 
 
-## Cloud-init configuration
+## :gear: Cloud-init configuration
 
 Using standard YAML formatted file for all nodes to setup default access point.
 
@@ -69,6 +69,58 @@ power_state:
 ```bash
 # Run package update
 sudo apt update && sudo apt full-upgrade -y
+```
+
+```bash
+# Network packages
+sudo apt install -y \
+    nftables \
+    net-tools 
+
+#system packages
+sudo apt install -y \
+    curl \
+    git \
+    wget \
+    net-tools \
+    chorny \
+    ntpsec-ntpdate
+
+```
+
+## :clock3: NTP/NTS Configuration
+
+### Create Client Configuration
+```bash
+# Add target NTP server, local Router server
+sudo nano /etc/chrony/sources.d/router-ntp.sources
+
+# Remove existing sources which are external
+sudo mv ubuntu-ntp-pools.sources ubuntu-ntp-pools.sources.disable
+```
+
+### Client Source Configuration `/etc/chrony/sources.d/router-ntp.sources`
+```bash
+server 10.0.0.1 iburst prefer
+```
+
+
+### Test NTP/NTS Config
+```bash
+# Restart chrony to load the new cofig
+sudo systemctl restart chrony
+
+# Check connection details
+chronyc -n sources
+# Look for an output srarting with ^* (source we are using)
+
+# View chrony activity
+chronyc activity
+
+# Client side test to NTP server
+sudo chronyc makestep
+# Expected: 200 OK
+
 ```
 
 <p align="center">

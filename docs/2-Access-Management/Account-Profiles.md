@@ -12,7 +12,7 @@
     width="25%">
 </p>
 
-## Control User
+## :frowning_man: Control User
 
 Cluster setup currently is operating under main admin user: `berryadmin` which controls all configuration, setup, start and stop or service and has elevated access rights.
 
@@ -22,7 +22,7 @@ Cluster setup currently is operating under main admin user: `berryadmin` which c
 | berryadmin | Control user | sudo | Only SSH | - | Linux, Kubernetes |
 | ... | ...
 
-## SSH Key Generation
+## :key: SSH Key Generation
 SSH (Secure Shell) keys provides a password less more secure, encrypted way to remotely access and control another computer over a network. 2 keys are generated, a public key that is shared with target server and private key which is not distributed and used to authenticate. [SSH Git](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
 
 ```bash

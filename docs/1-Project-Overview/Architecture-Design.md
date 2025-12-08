@@ -70,7 +70,7 @@ The project hardware setup details each element, required to build a small clust
 * **Cooling Fan:** Mounted on top of each board in the cluster
 * **Idividual Heatsinks:** Alluminium heatsinks applied on Processor, RAM, USB controller and Ethernet controller
 
-## Control Node
+## :computer: Control Node
 A Windows Subsystem for Linux (WSL) with Ubuntu OS installed on a laptop. Main access point for all server configuration managment through SSH key access.
 
 
