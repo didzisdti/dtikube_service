@@ -1,62 +1,53 @@
 {
-  "hash": "e4cb8e2f",
-  "configHash": "519c4691",
+  "hash": "676e26ec",
+  "configHash": "2b95e1d7",
   "lockfileHash": "4dd30da0",
-  "browserHash": "4a172fd6",
+  "browserHash": "0704659b",
   "optimized": {
     "vue": {
       "src": "../../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "53ab144e",
+      "fileHash": "0697e9ab",
       "needsInterop": false
     },
     "vitepress > @vue/devtools-api": {
       "src": "../../../../node_modules/@vue/devtools-api/dist/index.js",
       "file": "vitepress___@vue_devtools-api.js",
-      "fileHash": "11157da5",
+      "fileHash": "25d19bdb",
       "needsInterop": false
     },
     "vitepress > @vueuse/core": {
       "src": "../../../../node_modules/@vueuse/core/index.mjs",
       "file": "vitepress___@vueuse_core.js",
-      "fileHash": "c0fc8098",
+      "fileHash": "102083e6",
       "needsInterop": false
     },
     "@braintree/sanitize-url": {
       "src": "../../../../node_modules/@braintree/sanitize-url/dist/index.js",
       "file": "@braintree_sanitize-url.js",
-      "fileHash": "0ed3a6aa",
+      "fileHash": "9486fd12",
       "needsInterop": true
     },
     "dayjs": {
       "src": "../../../../node_modules/dayjs/dayjs.min.js",
       "file": "dayjs.js",
-      "fileHash": "087503e5",
+      "fileHash": "a0dd6d22",
       "needsInterop": true
     },
     "cytoscape-cose-bilkent": {
       "src": "../../../../node_modules/cytoscape-cose-bilkent/cytoscape-cose-bilkent.js",
       "file": "cytoscape-cose-bilkent.js",
-      "fileHash": "819db1d2",
+      "fileHash": "6b9dc1be",
       "needsInterop": true
     },
     "cytoscape": {
       "src": "../../../../node_modules/cytoscape/dist/cytoscape.esm.mjs",
       "file": "cytoscape.js",
-      "fileHash": "ec9acbe9",
-      "needsInterop": false
-    },
-    "@theme/index": {
-      "src": "../../../../node_modules/vitepress/dist/client/theme-default/index.js",
-      "file": "@theme_index.js",
-      "fileHash": "b9671bb0",
+      "fileHash": "008b20dc",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-4GKOY3W3": {
-      "file": "chunk-4GKOY3W3.js"
-    },
     "chunk-EKBJ2FPM": {
       "file": "chunk-EKBJ2FPM.js"
     },

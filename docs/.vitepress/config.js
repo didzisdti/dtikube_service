@@ -2,6 +2,7 @@
 import { defineConfig } from 'vitepress'
 import { withMermaid } from 'vitepress-plugin-mermaid'
 
+
 export default withMermaid(
   defineConfig
         ({  // Metadata
@@ -39,10 +40,17 @@ export default withMermaid(
                             ],
                     },
                     {
+                    text: 'Automation',
+                    collapsed: false,
+                    items: [
+                            {text: 'Ansible Node Setup', link: '/4-Automation/Ansible-node-setup' },
+                            ],
+                    },
+                    {
                     text: 'Networking',
                     collapsed: true,
                     items: [
-                            {text: 'k3s Networking', link: '/4-Networking/k3s-Networking' },
+                            {text: 'k3s Networking', link: '/6-Networking/k3s-Networking' },
                             ],
                     },
                     {
@@ -50,13 +58,6 @@ export default withMermaid(
                     collapsed: true,
                     items: [
                             {text: 'k3s Setup', link: '/5-Kubernetes/k3s-Setup' },
-                            ],
-                    },
-                    {
-                    text: 'Sample',
-                    collapsed: false,
-                    items: [
-                            {text: 'Sample', link: '/00-sample/sample' },
                             ],
                     },
                 ],

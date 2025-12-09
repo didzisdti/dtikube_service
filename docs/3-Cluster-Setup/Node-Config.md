@@ -74,7 +74,6 @@ sudo apt update && sudo apt full-upgrade -y
 ```bash
 # Network packages
 sudo apt install -y \
-    nftables \
     net-tools 
 
 #system packages
@@ -82,9 +81,7 @@ sudo apt install -y \
     curl \
     git \
     wget \
-    net-tools \
-    chorny \
-    ntpsec-ntpdate
+    net-tools 
 
 ```
 

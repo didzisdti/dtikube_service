@@ -118,15 +118,13 @@ sudo apt update && sudo apt full-upgrade -y
 # Network packages
 sudo apt install -y \
     dnsmasq \
-    nftables \
     net-tools 
 
 #system packages
 sudo apt install -y \
     curl \
     git \
-    wget \
-    chorny 
+    wget 
 
 ```
 
