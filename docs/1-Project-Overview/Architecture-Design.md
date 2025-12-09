@@ -23,19 +23,34 @@ The setup of my lab is based on single board computers (SBC), in our case focus 
 | Home  | 192.168.1.x | Control node | Laptop | Windows |RogStrix | 16 GB |
 | Home  | 192.168.1.10, 10.0.0.1 | Gateway Server | SBC | Ubuntu 25.10 | Raspberry Pi 4B | 8 GB|
 |  LAN  | 10.0.0.5 | Kubernetes master | SBC | Ubuntu 25.10 | Raspberry Pi 4B | 8 GB|
+|  LAN  | 10.0.0.6 | Kubernetes master | SBC | Ubuntu 25.10 | Raspberry Pi 4B | 8 GB|
 |  LAN   | 10.0.0.10 | Kubernetes worker | SBC | Ubuntu 25.10 | Raspberry Pi 4B | 8 GB|
-|  LAN   | 10.0.0.11 | Kubernetes worker | SBC | Ubuntu 25.10 | Raspberry Pi 4B | 8 GB|
+|  LAN   | 10.0.0.11 | Kubernetes worker | SBC | Ubuntu 25.10 | Raspberry Pi 5  | 8 GB|
 
 ## :hammer_and_wrench: Hardware
 
 The project hardware setup details each element, required to build a small cluster, from power management and cabling to processing boards and physcial cluster rack assembly.
 
 
-### Processing board: Raspberry Pi 4B
-* **CPU:** Broadcom BCM2711, Processor Quad core A72 (ARM v8) 64-bit, 1.5GHz
+### Processing boards
+
+#### Raspberry Pi 4B
+* **CPU:** Broadcom BCM2711 Processor, Quad core A72 (ARM v8) 64-bit, 1.5GHz
 * **RAM:** 8GB LPDDR4 SDRAM
 * **Ethernet:** 1 Gbit ethernet
 * **WIFI** 2.4GHz/5.0GHz IEEE 802.11ac
+* **USB:** 2 x USB 2.0 ports, 2 x USB 3.0 ports
+* **Storage:** MircoSD card slot 
+* **POWER:** 3 Options available
+  * 5V/3A DC via USB-C or 
+  * 5V/3A DC via GPIO header or 
+  * Power over Ethernet (PoE) enabled (requires separate PoE HAT)
+
+#### Raspberry Pi 5
+* **CPU:** Broadcom BCM2712 processor,  Quad core A76 (ARM v8) 64-bit, 2.4GHz
+* **RAM:** 8GB LPDDR4X-4267 SDRAM
+* **Ethernet:** 1 Gbit ethernet
+* **WIFI** Dual-band 802.11ac Wi-Fi
 * **USB:** 2 x USB 2.0 ports, 2 x USB 3.0 ports
 * **Storage:** MircoSD card slot 
 * **POWER:** 3 Options available

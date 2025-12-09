@@ -15,15 +15,13 @@ Target stack for our first milestone: Kube platform activation
 | Automation | <img src="../Graphics/ansible.svg" width="15%" style="display:inline; vertical-align:middle;"> [Ansible](https://www.redhat.com/en/ansible-collaborative)  | Automates system configuration |
 | Automation | <img src="../Graphics/Argo_CD.svg" width="15%" style="display:inline; vertical-align:middle;"> [Ago CD](https://argoproj.github.io/cd/)  | Declarative, GitOps continuous delivery |
 | Orchestration | <img src="../Graphics/K3s.svg" width="15%" style="display:inline; vertical-align:middle;"> [K3S](https://k3s.guide/docs/welcome) | Lightweight Kubernetes distro |
-| Network   | ... |  | ... |
+| Network   | <img src="../Graphics/haproxy.svg" width="15%" style="display:inline; vertical-align:middle;"> [HA Proxy](https://www.haproxy.org/) | Load balancer for Kubernetes |
 
 ...
 
 ...
 
-...
 
-...
 
 
 <p align="center">
