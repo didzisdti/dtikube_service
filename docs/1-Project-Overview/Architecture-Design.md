@@ -29,7 +29,7 @@ The setup of my lab is based on single board computers (SBC), in our case focus 
 
 ## :hammer_and_wrench: Hardware
 
-The project hardware setup details each element, required to build a small cluster, from power management and cabling to processing boards and physcial cluster rack assembly.
+The project hardware setup details each element, required to build a small cluster, from power management and cabling to processing boards and physical cluster rack assembly.
 
 
 ### Processing boards
@@ -77,15 +77,15 @@ The project hardware setup details each element, required to build a small clust
 ### Power supply
 * **Anker Prime Charger, 200W 6-Port GaN:** 4 x USB-C ports with up to 100W supply on a single port, and 2 USB ports with up to 22.5W supply. Utilised by both control node and cluster.
   * **ActiveShield 3.0:** Offers voltage protection, current regulation, and real-time temperature monitoring.
-  * **PowerIQ 3.0:** Technology guarantees reconginition and fast charging for a wide range of devices
+  * **PowerIQ 3.0:** Technology guarantees recognition and fast charging for a wide range of devices
 * **Wiring:** USB-C to USB-C Cable, 60W 20V/3A
 
 ### Cooling
-* **Open-Case Frame:** Open Pi Cluster case allowing adequate air ciruclation
+* **Open-Case Frame:** Open Pi Cluster case allowing adequate air circulation
 * **Cooling Fan:** Mounted on top of each board in the cluster
-* **Idividual Heatsinks:** Alluminium heatsinks applied on Processor, RAM, USB controller and Ethernet controller
+* **Individual Heatsinks:** Aluminium heatsinks applied on Processor, RAM, USB controller and Ethernet controller
 
 ## :computer: Control Node
-A Windows Subsystem for Linux (WSL) with Ubuntu OS installed on a laptop. Main access point for all server configuration managment through SSH key access.
+A Windows Subsystem for Linux (WSL) with Ubuntu OS installed on a laptop. Main access point for all server configuration management through SSH key access.
 
 

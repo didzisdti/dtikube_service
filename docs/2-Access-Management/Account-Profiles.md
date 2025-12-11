@@ -16,7 +16,7 @@
 
 Cluster setup currently is operating under main admin user: `berryadmin` which controls all configuration, setup, start and stop or service and has elevated access rights.
 
-| Username | Role | Priveledges | Authentication | Expiry |Used for |
+| Username | Role | Privileges | Authentication | Expiry |Used for |
 |----------|------|-------------|----------------|--------|---------|
 | root | Superuser | root |  disabled | - | Linux |
 | berryadmin | Control user | sudo | Only SSH | - | Linux, Kubernetes |
@@ -27,9 +27,9 @@ SSH (Secure Shell) keys provides a password less more secure, encrypted way to r
 
 ```bash
 # Process to generate SSH key
-# Note it will prompt key location, name and passphase
-# Leave passphrase empty if you don't require autherntication each time you use the key
+# Note it will prompt key location, name and passphrase
+# Leave passphrase empty if you don't require authentication each time you use the key
 ssh-keygen -t ed25519 -C "your_email@example.com"
 ```
 
-Key pair with pivate key:`id_ed25519` and public key:`id_ed25519.pub` will be generated in ~/.ssh directory.
+Key pair with private key:`id_ed25519` and public key:`id_ed25519.pub` will be generated in ~/.ssh directory.

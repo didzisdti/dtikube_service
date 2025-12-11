@@ -10,8 +10,8 @@
     <img alt="pikube-logo" src="../Graphics/gateway.svg" width="25%">
 </p>
 
-## Getway Setup
-Central component in the architecture, controlling all the traffing, connecting to internet and acting as DNS, DCHP, NTP and firewall server. Cluster is accessed using gateway as a jump server.
+## Gateway Setup
+Central component in the architecture, controlling all the traffic, connecting to internet and acting as DNS, DCHP, NTP and firewall server. Cluster is accessed using gateway as a jump server.
 
 ### Gateway node
 * **`berryX`** : RaspberryPi 4B, 8GB
@@ -28,9 +28,9 @@ The gateway node runs on the latest Ubuntu 25.10 server. The process for setting
 
 ## :gear: Cloud-init configuration
 
-Using standard YAML formatted file for all nodes to setup default access point.
+Using standard YAML formatted file for all nodes to setup default access point and network settings.
 
-Replace all content of user-data below content 
+Replace all content of `user-data`
 
 ```yaml
 #cloud-config
@@ -72,7 +72,7 @@ power_state:
   mode: reboot
 ```
 
-Replace all content of network below content 
+Replace all content of `network-config`
 
 ```yaml
 # Cloud-init network configuration
@@ -125,17 +125,16 @@ sudo apt install -y \
     curl \
     git \
     wget 
-
 ```
 
 ## :globe_with_meridians: Network configuration
 The network is segregated in 2 parts
-* **Home Network Endpoint:** 192.168.1.10/24 Wifi connectiong to home internet router
+* **Home Network Endpoint:** 192.168.1.10/24 Wifi connection to home internet router
 * **Cluster Network Endpoint:** 10.0.0.1 cable setup into LAN switch
 
 ## :globe_with_meridians: DNS & DHCP configuration
 
-### dnsmasq configuation
+### dnsmasq configuration
 
 dnsmaq is a lightweight DNS, DHCP service that is suitable for smaller network and home lab setup. The setup include Static IP management and DNS forwarding.
 
@@ -150,7 +149,7 @@ sudo cp /etc/dnsmasq.conf /etc/bak_dnsmasq.conf
 #3 Create config location .d if one does not yet exist
 sudo mkdir /etc/dnsmasq.d/
 
-#4. Uncommnent dnsmasq.conf setting that enables conf file directory lookup
+#4. Uncomment dnsmasq.conf setting that enables conf file directory lookup
 sudo sed -i 's|#conf-dir=/etc/dnsmasq\.d/,\*\.conf|conf-dir=/etc/dnsmasq.d/,*.conf|' /etc/dnsmasq.conf
 
 
@@ -185,7 +184,7 @@ dhcp-option=option:router,10.0.0.1              # router gateway (3)
 dhcp-option=option:dns-server,10.0.0.1          # DNS server (6)
 dhcp-option=option:ntp-server,10.0.0.1          # NTP server (42)
 
-# Local DNS domain configurtion
+# Local DNS domain configuration
 domain=dtikube.techinsights.com
 local=/dtikube.techinsights.com/
 expand-hosts                                    # automatically append domain= to entries from hosts files. /etc/hosts
@@ -205,13 +204,14 @@ server=8.8.4.4                  # Google secondary
 
 ```bash
 # -----------------------
-# DNSMASQ CONFIG FOR Satic IP assignments
+# DNSMASQ CONFIG FOR Static IP assignments
 # -----------------------
 
-#Resered satic IP addresses for master nodes
+# Reserved static IP addresses for master nodes
 dhcp-host=d8:3a:dd:e2:85:37,berry01,10.0.0.5            #1st 
+#dhcp-host=xxxxx,berry02,10.0.0.6                       #5th
 
-#Reserver static IP address for worker nodes
+# Reserved static IP addresses for worker nodes
 dhcp-host=d8:3a:dd:ef:cd:e5,berryw11,10.0.0.10          #2nd 
 dhcp-host=d8:3a:dd:e2:81:5c,berryw12,10.0.0.11          #3rd
 ```
@@ -237,7 +237,7 @@ LAN cluster by default cannot reach internet outside its local network area. To 
 # Enable packet forwarding
 echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf
 
-# Apply fowarding changes now
+# Apply forwarding changes now
 sudo sysctl -p
 
 # Verify setup
@@ -261,9 +261,9 @@ cat /etc/nftables.conf
 ```
 
 > [!IMPORTANT]
-> Configuration references are key sensitive, for simplicity of setup suggestion is to keep it either all CAPS or all lowe case.
+> Configuration references are key sensitive, for simplicity of setup suggestion is to keep it either all CAPS or all lower case.
 
- The chosen setup features the professional approach of modular structure for nftables configuration, often used in production environments and has improved maintainability and scalaility. In addition the configuration files are numbered to guarantee loading order and provide predictability.
+ The chosen setup features the professional approach of modular structure for nftables configuration, often used in production environments and has improved maintainability and scalability. In addition, the configuration files are numbered to guarantee loading order and provide predictability.
 
  ### Creating Modular Structure
 
@@ -290,7 +290,7 @@ sudo nano /etc/nftables.d/60-nat/20-postrouting.nft
  ```bash
 #!/usr/sbin/nft -f
 # General Firewall settings
-# This config file is updated only once during intial creation
+# This config file is updated only once during initial creation
 
 # Clear ruleset before applying new
 flush ruleset
@@ -316,9 +316,9 @@ define home_net = 192.168.1.0/24    # Home network
 #Not yet defined
 ```
 
-### Incomming Traffic Rules `/etc/nftables.d/30-input.nft`
+### Incoming Traffic Rules `/etc/nftables.d/30-input.nft`
 ```bash
-# Ruleset for incomming traffic
+# Ruleset for incoming traffic
 
 table ip filter {
 
@@ -347,7 +347,7 @@ table ip filter {
 
 ### Create Constants Set `/etc/nftables.d/40-forward.nft`
 ```bash
-# Rulseset for packets passing through the router
+# Ruleset for packets passing through the router
 
 table ip filter {
     chain forward {
@@ -423,10 +423,10 @@ table ip nat {
 ### Post Checks
 ```bash
 # Check syntax, useful check after config file edit(s)
-# Expected output: nothing,unless syntax issue it will throw error details
+# Expected output: nothing, unless syntax issue it will throw error details
 sudo nft -c -f /etc/nftables.conf
 
-#list all nftables ruleset 
+# List all nftables ruleset 
 # Note that all constants will be replaced with actual values
 sudo nft list ruleset
 
@@ -451,13 +451,13 @@ nmap -p 1-1000 10.0.0.1
 
 ## :clock3: NTP/NTS Configuration
 
-Gateway server is positioned to provide Network Time Protocol services using `chrony`, allowing seemless time accuracy accross the cluster. 
+Gateway server is positioned to provide Network Time Protocol services using `chrony`, allowing seamless time accuracy across the cluster. 
 
 ::: info Why **`chrony`**? 
 * Moder, fast and high accuracy NTP service
 * Can safely handle large de-sync gaps
-* Included as default on many newer verson Linux distros, replacement of older version `ntpd`
-* Is recomended for orchestrated environment like kubernetes
+* Included as default on many newer version Linux distros, replacement of older version `ntpd`
+* Is recommended for orchestrated environment like Kubernetes
 * Very low CPU and network resource consumption
 :::
 
@@ -512,12 +512,12 @@ pool ntp-bootstrap.ubuntu.com iburst maxsources 1 nts certset 1
 
 ### Test NTP/NTS Setup
 ```bash
-# Restart chrony to load the new cofig
+# Restart chrony to load the new config
 sudo systemctl restart chrony
 
 # Check connection details
 chronyc -n sources
-# Look for an output srarting with ^* (source we are using)
+# Look for an output starting with ^* (source we are using)
 
 # View chrony activity
 chronyc activity

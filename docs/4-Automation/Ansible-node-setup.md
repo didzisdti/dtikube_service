@@ -21,7 +21,7 @@ Ansible provides open-source automation that reduces complexity and allows autom
 :::
 
 ## Control node choice
-Ansible offers sveral options for setting up the control node 
+Ansible offers several options for setting up the control node 
 * Linux environment options include any Linux machine with supported Linux OS on it.
 
 * Windows environment with Windows Subsystem for Linux (WSL)
@@ -30,7 +30,7 @@ Ansible offers sveral options for setting up the control node
 WSL is already chosen for other activities, the Ansible will also reside on WSL and will utilise Execution Environment (EE).
 
 ## Ansible Setup
-For executing our first ansible playbook we will deal with start with the basics of the setup
+For executing our first ansible playbook we will start with the basics of the setup
 
 ## Setup Pre-requisites
 ```bash
@@ -125,13 +125,13 @@ ansible gateway -m ping
 
 # Testing sample playbook
 ansible-playbook ./playbooks/play_remote.yml
-# Expeted: output with no errors  ok=2 changed =1
+# Expected: output with no errors  ok=2 changed =1
 # you can also ssh on the target and see the new file created
 ```
 
 Now we can start building more elaborate playbooks to automate system and service setup.
 
-Next target, system package installations, updates and kubernetes setup automation
+Next target, system package installations, updates and Kubernetes setup automation
 
 
 

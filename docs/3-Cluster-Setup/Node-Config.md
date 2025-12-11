@@ -22,7 +22,7 @@ The cluster currently consists of Raspberry Pi nodes with similar hardware setti
 
 Using standard YAML formatted file for all nodes to setup default access point.
 
-Replace all content of user-data below content 
+Replace all content of user-data 
 
 ```yaml
 #cloud-config
@@ -30,7 +30,7 @@ Replace all content of user-data below content
 # System Configuration
 timezone: Europe/London
 locale: en_GB.UTF-8
-hostname: berry01git 
+hostname: berry01 
 manage_etc_hosts: localhost
 
 # User Account Configuration
@@ -63,6 +63,17 @@ disable_root: true
 power_state:
   mode: reboot
 ```
+Replace all content of network-config
+```yaml
+network:
+  version: 2
+
+  ethernets:
+    eth0:
+      dhcp4: true
+      optional: true
+```
+
 
 ### After initial cloud-init bootup
 

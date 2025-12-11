@@ -6,10 +6,10 @@
 
 # {{ $frontmatter.title }}
 
-The focuses on exploring the capabilities and utilising open source technologies, wtih preference of projects from Could Cloud Native Computing Foundation [CNCF](https://www.cncf.io/projects/) ecosystem.
+The focuses on exploring the capabilities and utilising open source technologies, with preference of projects from Could Cloud Native Computing Foundation [CNCF](https://www.cncf.io/projects/) ecosystem.
 
 Target stack for our first milestone: Kube platform activation
-| Purpose |Technology | Descriptipn |
+| Purpose |Technology | Description |
 |---------|------------|-------------|
 | Automation | <img src="../Graphics/cloud-init.svg" width="15%" style="display:inline; vertical-align:middle;"> [Cloud-init](https://cloudinit.readthedocs.io/en/latest/)  | Initial OS configuration |
 | Automation | <img src="../Graphics/ansible.svg" width="15%" style="display:inline; vertical-align:middle;"> [Ansible](https://www.redhat.com/en/ansible-collaborative)  | Automates system configuration |
