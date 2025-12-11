@@ -20,7 +20,7 @@ Ansible provides open-source automation that reduces complexity and allows autom
 * **Scalability and flexibility:** Modular design and wide range of supported platforms.
 :::
 
-## Control node choice
+## :eye: Control node choice
 Ansible offers several options for setting up the control node 
 * Linux environment options include any Linux machine with supported Linux OS on it.
 
@@ -29,10 +29,11 @@ Ansible offers several options for setting up the control node
 
 WSL is already chosen for other activities, the Ansible will also reside on WSL and will utilise Execution Environment (EE).
 
-## Ansible Setup
+## :memo: Ansible Setup Guide
+
 For executing our first ansible playbook we will start with the basics of the setup
 
-## Setup Pre-requisites
+### Setup Pre-requisites
 ```bash
 # Install pre-requisite packages
 sudo apt install -y \
@@ -137,6 +138,8 @@ Next target, system package installations, updates and Kubernetes setup automati
 
 ## --PLANNED-- Creating Container Environment (EE)
 --PLANNED-- exploring at later stage containered setup for Ansible 
+
+Main components, ansible-builder, ansible-navigator, podman
 
 ...
 

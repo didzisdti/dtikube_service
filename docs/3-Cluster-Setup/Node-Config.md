@@ -95,6 +95,57 @@ sudo apt install -y \
     net-tools 
 
 ```
+## :closed_book: Manual Configuration
+All cloud init actions can also be executed manually using linux command line. In a scenario where a change is needed each action is described with update and check.
+
+**Upate and Upgrade System:**
+```bash
+sudo apt-get update && sudo apt-get upgrade -y
+```
+
+**Hostname Change:**
+```bash
+sudo hostnamectl set-hostname berry02
+
+# Check hostname is changed
+hostnamectl status
+```
+
+**Change timezone and locale:**
+```bash
+sudo timedatectl set-timezone Europe/London
+sudo locale-gen en_GB.UTF-8
+sudo update-locale LANG=en_GB.UTF-8
+
+# Check locale and timezone
+locale | grep LANG
+timedatectl | grep "Time zone
+```
+
+**Disable Password Authentication:**
+```bash
+# Disable password auth, set to hard NO
+sudo sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+sudo sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+
+# Check its disabled
+cat /etc/ssh/sshd_config | grep "PasswordAuthentication"
+```
+
+**Lock Root Login:**
+```bash
+# Disable root login, set to hard No
+sudo sed -i 's/#PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config
+sudo sed -i 's/PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config
+
+# Check its disabled
+cat /etc/ssh/sshd_config | grep RootLogin
+```
+**Reboot Afterwards:**
+```bash
+sudo reboot
+```
+
 
 ## :clock3: NTP/NTS Configuration
 

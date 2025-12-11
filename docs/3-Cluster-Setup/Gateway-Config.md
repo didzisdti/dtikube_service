@@ -209,7 +209,7 @@ server=8.8.4.4                  # Google secondary
 
 # Reserved static IP addresses for master nodes
 dhcp-host=d8:3a:dd:e2:85:37,berry01,10.0.0.5            #1st 
-#dhcp-host=xxxxx,berry02,10.0.0.6                       #5th
+dhcp-host=88:a2:9e:29:a0:bb,berry02,10.0.0.6            #5th
 
 # Reserved static IP addresses for worker nodes
 dhcp-host=d8:3a:dd:ef:cd:e5,berryw11,10.0.0.10          #2nd 
@@ -228,6 +228,9 @@ sudo systemctl status dnsmasq
 #3. Test DNS resolution, avoid false positive and force lookup through dnsmasq
 nslookup google.com 10.0.0.1
 
+# To make the node pickup new static assigned IP address
+# ssh to the node and restart the service
+sudo systemctl restart systemd-networkd
 ```
 
 ## Router Configuration
