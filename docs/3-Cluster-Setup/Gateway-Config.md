@@ -207,13 +207,13 @@ server=8.8.4.4                  # Google secondary
 # DNSMASQ CONFIG FOR Static IP assignments
 # -----------------------
 
-# Reserved static IP addresses for master nodes
-dhcp-host=d8:3a:dd:e2:85:37,berry01,10.0.0.5            #1st 
-dhcp-host=88:a2:9e:29:a0:bb,berry02,10.0.0.6            #5th
+#Resered satic IP addresses for master nodes
+dhcp-host=d8:3a:dd:e2:85:37,berry01,10.0.0.5,infinite            #1st
+dhcp-host=d8:3a:dd:ef:cd:e5,berry02,10.0.0.6,infinite            #2nd
 
-# Reserved static IP addresses for worker nodes
-dhcp-host=d8:3a:dd:ef:cd:e5,berryw11,10.0.0.10          #2nd 
-dhcp-host=d8:3a:dd:e2:81:5c,berryw12,10.0.0.11          #3rd
+#Reserver static IP address for worker nodes
+dhcp-host=d8:3a:dd:e2:81:5c,berryw11,10.0.0.11,infinite          #3rd
+dhcp-host=88:a2:9e:29:a0:bb,berryw10,10.0.0.10,infinite          #5th
 ```
 
 ### Config post-checks
@@ -261,6 +261,9 @@ sudo systemctl status nftables
 
 # Check existing config of nftables
 cat /etc/nftables.conf
+
+# Enable nftables start up post server restart
+sudo systemctl enable nftables
 ```
 
 > [!IMPORTANT]
@@ -363,6 +366,9 @@ table ip filter {
 
         # Enable LAN → WAN access to internet services
         iif $lan_if oif $wan_if accept
+
+        # Enable Wan -> LAN access
+        iif $wan_if oif $lan_if accept
 
         # Logging with custom string to help with high level analysis and limiting log input to not flood the logs
         log prefix "[GATEWAY FORWARD DROP]: " limit rate 5/minute burst 5 packets

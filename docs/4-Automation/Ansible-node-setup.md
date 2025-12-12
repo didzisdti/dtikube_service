@@ -128,6 +128,11 @@ ansible gateway -m ping
 ansible-playbook ./playbooks/play_remote.yml
 # Expected: output with no errors  ok=2 changed =1
 # you can also ssh on the target and see the new file created
+
+# Remote command execution
+ansible gateway -a "ls -l /etc/dnsmasq.d"
+# Expected: should return list of files in that directory from target hosts
+
 ```
 
 Now we can start building more elaborate playbooks to automate system and service setup.
