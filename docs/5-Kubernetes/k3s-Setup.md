@@ -100,9 +100,125 @@ sudo swapoff -a
 
 # For persistant removal of swap comment outw with '#' swap entries in file below  
 sudo nano /etc/fstab
-
 ```
 
+> [!IMPORTANT]
+> For changes to apply, you must reboot the target host.
+
+## High Availability Configuration
+For Cluster that has more than 1 master the setup will require a load balancing element. HAProxy will be used to load balanace using our central gateway node.
+
+### Installation
+```bash
+# Check HAProxy is already deployed
+sudo systemctl status haproxy
+
+# Install the required packge
+sudo apt install haproxy
+```
+
+### Configuration `/etc/haproxy/haproxy.cfg`
+Once installed we have default values already provided, most of which we will use.
+```bash
+# ----------------------------
+# Defaults post installation
+# ----------------------------
+
+global
+        # Loggs to debug HAProxy
+        log /dev/log    local0
+        log /dev/log    local1 notice
+
+        # Security setting
+        chroot /var/lib/haproxy
+
+        # Enables external tools to query HAProxy for status
+        stats socket /run/haproxy/admin.sock mode 660 level admin
+        stats timeout 30s
+
+        # Security and process management
+        user haproxy
+        group haproxy
+        daemon
+
+        # Default SSL material locations
+        ca-base /etc/ssl/certs
+        crt-base /etc/ssl/private
+
+        # See: https://ssl-config.mozilla.org/#server=haproxy&server-version=2.0.3&config=intermediate
+        ssl-default-bind-ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384
+        ssl-default-bind-ciphersuites TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256
+        ssl-default-bind-options ssl-min-ver TLSv1.2 no-tls-tickets
+
+defaults
+        # Logging
+        log     global
+        
+        # Connection more with options
+        mode    http
+        option  httplog
+        option  dontlognull
+        
+        # Timeout ettings (in seconds)
+        timeout connect 5000
+        timeout client  50000
+        timeout server  50000
+
+        # Error page config
+        errorfile 400 /etc/haproxy/errors/400.http
+        errorfile 403 /etc/haproxy/errors/403.http
+        errorfile 408 /etc/haproxy/errors/408.http
+        errorfile 500 /etc/haproxy/errors/500.http
+        errorfile 502 /etc/haproxy/errors/502.http
+        errorfile 503 /etc/haproxy/errors/503.http
+        errorfile 504 /etc/haproxy/errors/504.http
+
+# ----------------------------
+# Additionally added config
+# ----------------------------
+
+#-------------------------------
+# Frontend API
+#-------------------------------
+frontend k3s_api
+    # Listen configuration
+    bind *:6443
+    mode tcp
+    option tcplog
+    
+    # Route to backend
+    default_backend k3s_backend
+
+#-------------------------------
+# Backend Control Plane
+#-------------------------------
+backend k3s_backend
+    # Connection configuration
+    mode tcp
+    option tcp-check
+    balance roundrobin
+    
+    # Master nodes
+    server berry01 10.0.0.5:6443 check
+    server berry02 10.0.0.6:6443 check
+```
+
+### Check and Restart
+```bash
+# Validate config syntax
+sudo haproxy -c -f /etc/haproxy/haproxy.cfg
+
+# Apply change and ensure startup after servere restart
+sudo systemctl restart haproxy
+sudo systemctl enable haproxy
+```
+
+## Master Creation
+Cluster has primary master to which all other nodes (master and worker) will be joining.
+
+
+
+## Worker Creation
 
 ...
 

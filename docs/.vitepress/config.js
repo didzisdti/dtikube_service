@@ -47,17 +47,17 @@ export default withMermaid(
                             ],
                     },
                     {
-                    text: 'Networking',
-                    collapsed: true,
-                    items: [
-                            {text: 'k3s Networking', link: '/6-Networking/k3s-Networking' },
-                            ],
-                    },
-                    {
                     text: 'Kubernetes',
                     collapsed: true,
                     items: [
                             {text: 'k3s Setup', link: '/5-Kubernetes/k3s-Setup' },
+                            ],
+                    },
+                    {
+                    text: 'Networking',
+                    collapsed: true,
+                    items: [
+                            {text: 'k3s Networking', link: '/6-Networking/k3s-Networking' },
                             ],
                     },
                 ],

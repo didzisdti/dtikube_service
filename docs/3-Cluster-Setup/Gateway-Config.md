@@ -118,7 +118,8 @@ sudo apt update && sudo apt full-upgrade -y
 # Network packages
 sudo apt install -y \
     dnsmasq \
-    net-tools 
+    net-tools \
+    haproxy
 
 #system packages
 sudo apt install -y \
