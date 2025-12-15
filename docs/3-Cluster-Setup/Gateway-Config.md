@@ -316,16 +316,28 @@ define wan_if = wlan0     # Home network, listening external
 # Network Address Ranges
 define lan_net = 10.0.0.0/24        # LAN local network
 define home_net = 192.168.1.0/24    # Home network
+
+define incomming_udp = {
+    53,                 # DNS service
+    123,                # NTP time service
+    67,                 # DHCP server
+    68                  # DHCP client replies
+}
+
+define incomming_tcp = {
+    22,                 # SSH
+    80,                 # HTTP
+    443,                # HTTPS
+    6443                # Kubernetes API server
+}
 ```
 
-### Create Constants Set `/etc/nftables.d/20-sets.nft`
-```bash
-#Not yet defined
-```
 
 ### Incoming Traffic Rules `/etc/nftables.d/30-input.nft`
 ```bash
 # Ruleset for incoming traffic
+
+# Ruleset for incomming traffic
 
 table ip filter {
 
@@ -342,6 +354,12 @@ table ip filter {
 
         # Allow LAN access
         iif $lan_if ip saddr 10.0.0.0/24 accept
+
+        # Allow incoming UDP services
+        iif $lan_if udp dport $incomming_udp ct state new accept
+
+        # Allow incoming TCP services
+        iif $lan_if tcp dport $incomming_tcp ct state new accept
 
         # Allow SSH from trusted hosts
         tcp dport 22 ip saddr 192.168.1.111 accept
