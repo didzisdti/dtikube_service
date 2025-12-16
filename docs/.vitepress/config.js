@@ -54,6 +54,13 @@ export default withMermaid(
                             ],
                     },
                     {
+                    text: 'Monitoring',
+                    collapsed: true,
+                    items: [
+                            {text: 'Prometheus Guide', link: '/7-Monitoring/Prometheus-setup' },
+                            ],
+                    },
+                    {
                     text: 'Networking',
                     collapsed: true,
                     items: [
