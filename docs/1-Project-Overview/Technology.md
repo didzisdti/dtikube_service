@@ -16,7 +16,7 @@ Target stack for our first milestone: Kube platform activation
 | **Automation** | <img src="../Graphics/Argo_CD.svg" width="15%" style="display:inline; vertical-align:middle;"> [Ago CD](https://argoproj.github.io/cd/)  | Declarative, GitOps continuous delivery |
 | **Orchestration** | <img src="../Graphics/K3s.svg" width="15%" style="display:inline; vertical-align:middle;"> [K3S](https://k3s.guide/docs/welcome) | Lightweight Kubernetes distro |
 | **Orchestration** | <img src="../Graphics/containerd.svg" width="15%" style="display:inline; vertical-align:middle;"> [Containerd](https://containerd.io/) | Industry-standard container runtim |
-| **Network**   | <img src="../Graphics/CoreDNS.svg" width="15%" style="display:inline; vertical-align:middle;"> [CoreDNS](https://coredns.io/) | DNS and Service Discovery |
+| **Network**   | <img src="../Graphics/coredns.svg" width="15%" style="display:inline; vertical-align:middle;"> [CoreDNS](https://coredns.io/) | DNS and Service Discovery |
 | **Network**   | <img src="../Graphics/haproxy.svg" width="15%" style="display:inline; vertical-align:middle;"> [HA Proxy](https://www.haproxy.org/) | Load balancer for Kubernetes |
 | **Network**   | <img src="../Graphics/flannel.svg" width="15%" style="display:inline; vertical-align:middle;"> [Flannel](https://github.com/flannel-io/flannel) | Kubernetes Pod-to-Pod Container Network Interface (CNI) |
 
