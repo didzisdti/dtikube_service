@@ -26,7 +26,7 @@ Target stack 2nd milestone:
 |---------|------------|-------------|
 | **Observability**   | <img src="../Graphics/prometheus.svg" width="15%" style="display:inline; vertical-align:middle;"> [Prometheus](https://prometheus.io/) | Monitoring and alerting |
 | **Authentication**   | <img src="../Graphics/keycloak.svg" width="15%" style="display:inline; vertical-align:middle;"> [KeyCloak](https://www.keycloak.org/) | Identity and Access Management |
-| **Authentication**   | <img src="../Graphics/OAuth2-proxy.svg" width="15%" style="display:inline; vertical-align:middle;"> [OAuth2-proxy](https://oauth2-proxy.github.io/oauth2-proxy/) | Reverse proxy for adding authentication to applications |
+| **Authentication**   | <img src="../Graphics/oauth2-proxy.svg" width="15%" style="display:inline; vertical-align:middle;"> [OAuth2-proxy](https://oauth2-proxy.github.io/oauth2-proxy/) | Reverse proxy for adding authentication to applications |
 | **Storage**   | <img src="../Graphics/longhorn.svg" width="15%" style="display:inline; vertical-align:middle;"> [Longhorn](https://longhorn.io/) | Cloud-native distributed block storage|
 ...
 
