@@ -326,6 +326,81 @@ kube-proxy-arg:
 curl -sfL https://get.k3s.io | sh -s - agent --server https://berryx.dtikube.techinsights.com:6443
 ```
 
+**Labelling worker:**
+```bash
+# Obtain worker name and 
+kubectl get nodes
+
+# Run on master node to label the worker node
+kubectl label nodes <node-name> node-role.kubernetes.io/worker=worker
+```
+
+## Managing Cluster from Control Node
+
+### kubectl
+```bash
+# Download kubectl
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/arm64/kubectl"
+
+# Deploy kubectl
+chmod 770 kubectl
+sudo mv kubectl /usr/local/bin/
+
+```
+
+### helm
+```bash
+# Download helm
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-4
+
+# Deploy helm
+chmod 700 get_helm.sh
+./get_helm.sh
+```
+
+### K9s terminal
+```bash
+# Download K9s
+curl -LO https://github.com/derailed/k9s/releases/latest/download/k9s_Linux_arm64.tar.gz
+
+# Deploy K9s
+tar -xzf k9s_Linux_arm64.tar.gz
+sudo mv k9s /usr/local/bin/
+```
+
+### Kubeconfig transfer
+```bash
+# Primary master node
+sudo cp /etc/rancher/k3s/k3s.yaml ~/k3s.yaml
+sudo chown berryadmin:users ~/k3s.yaml
+
+# Gateway node
+# Create .kube directory
+mkdir -p ~/.kube
+
+# Copy configuration from master
+scp -i ~/<private key> berryadmin@<Primary master IP>:~/k3s.yaml ~/.kube/config
+
+# User permissions
+sudo chown $USER:$USER ~/.kube/config
+chmod 644 ~/.kube/config
+
+# Update server address
+sed -i 's|server: https://127.0.0.1:6443|server: https://berryx.dtikube.techinsights.com:6443|g' ~/.kube/config
+
+# Check /etc/resolved if it points to your DNS router else lookup for DNS will go externall to 1.1.1.1
+cat /etc/resolv.conf
+```
+
+### Setup Test
+```bash
+# kubectl works
+kubectl get nodes
+
+# k9s terminal opens and connects (press 0 to see all pods)
+k9s 
+```
+
 ## Clean-up Installed Cluster
 Guide to remove all deployed elements and start from fresh beginning
 
