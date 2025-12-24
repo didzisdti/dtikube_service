@@ -51,7 +51,7 @@ export default withMermaid(
                     collapsed: true,
                     items: [
                             {text: 'k3s Setup', link: '/5-Kubernetes/k3s-Setup' },
-                            {text: 'k3s Networking', link: '/6-Networking/k3s-Networking' },
+                            {text: 'k3s Networking', link: '/5-Kubernetes/k3s-Networking' },
                             {text: 'Kube Commands', link: '/5-Kubernetes/Kube-commands' },                                                    
                             ],
                     },
