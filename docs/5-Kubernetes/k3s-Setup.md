@@ -11,7 +11,7 @@
 </p>
 
 ## :eye: Overview
-K3d is a lightweight Kubernetes distribution. It is CNCF Certified project and it is designed for resources limited environments, an ideal choice for a mini data centre.
+K3s is a lightweight Kubernetes distribution. It is CNCF Certified project and it is designed for resources limited environments, an ideal choice for a mini data centre.
 
 K3s has two primary roles:
 * **`K3s-Server:`** Runs server components: control place, scheduler, cloud-controller, helm-controller, etcd, API server, kubelet and kube-proxy. Note that master nodes can also run worker node simultaneously.

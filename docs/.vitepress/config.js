@@ -51,12 +51,14 @@ export default withMermaid(
                     collapsed: true,
                     items: [
                             {text: 'k3s Setup', link: '/5-Kubernetes/k3s-Setup' },
+                            {text: 'Kube Commands', link: '/5-Kubernetes/Kube-commands' },                            
                             ],
                     },
                     {
                     text: 'Monitoring',
                     collapsed: true,
                     items: [
+                            {text: 'Metric Server', link: '/7-Monitoring/Metric-server' },
                             {text: 'Prometheus Guide', link: '/7-Monitoring/Prometheus-setup' },
                             ],
                     },
