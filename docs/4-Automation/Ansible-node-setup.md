@@ -144,7 +144,7 @@ Next target, system package installations, updates and Kubernetes setup automati
 ## --PLANNED-- Creating Container Environment (EE)
 --PLANNED-- exploring at later stage containered setup for Ansible 
 
-Main components, ansible-builder, ansible-navigator, podman
+Main components, ansible-builder, ansible-navigator
 
 ...
 
