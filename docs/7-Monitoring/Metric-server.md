@@ -6,7 +6,7 @@
 
 # {{ $frontmatter.title }}
 
-Metrics Server is a lightweight Kubernetes component that collects resource usage data (CPU, memory) from nodes and Pods. It aggregates this information and makes it available via the Metrics API, which is used by components like Horizontal Pod Autoscaler (HPA) and kubectl top.Main usage is monitoring and autoscaling based on real-time resource usage.
+Metrics Server is a lightweight Kubernetes component that collects resource usage data (CPU, memory) from nodes and Pods. It aggregates this information and makes it available via the Metrics API, which is used by components like HorizontalPodAutoscaler (HPA), VerticalPodAutoscaler (VPA) and kubectl top. Main usage is monitoring and autoscaling based on real-time resource usage.
 
 ## How It Works
 

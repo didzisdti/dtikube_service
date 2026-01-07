@@ -179,9 +179,5 @@ chronyc activity
 # Client side test to NTP server
 sudo chronyc makestep
 # Expected: 200 OK
-
 ```
 
-<p align="center">
-    <img alt="pikube-logo" src="../Graphics/under-construction.svg" width="40%">
-</p>
