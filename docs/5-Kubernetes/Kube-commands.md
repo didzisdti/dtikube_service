@@ -23,6 +23,9 @@ ps aux | grep containerd | grep k3s
 
 ### Service config
 ```bash
+# All available "kinds"
+kubectl api-resources -o wide
+
 # CHeck containerd config
 sudo grep SystemdCgroup /var/lib/rancher/k3s/agent/etc/containerd/config.toml
 

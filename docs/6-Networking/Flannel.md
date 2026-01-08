@@ -10,15 +10,15 @@
     <img alt="pikube-logo" src="../Graphics/flannel.svg" width="25%">
 </p>
 
-Flannel is a lightweight CNI pluggin that is packaged together with K3s and and creates a layer 3 network overlay, by default as Virtual Extensible Local Area Network (VxLAN). 
+Flannel is a lightweight CNI plugin that is packaged together with K3s and creates a layer 3 network overlay, by default as Virtual Extensible Local Area Network (VxLAN). 
 
 ## Config Options
 
-During K3s setup ther are several options to customise our CNI setup.
+During K3s setup there are several options to customise our CNI setup.
 
 > [!IMPORTANT]
-> Flannel configuration must be identical across all master nodes of the cluster. No configration takes place on worker nodes.
-> For Raspberry Pi running Ubuntu OS check compatibility and if an additional setup is reqired to use VxLAN `sudo apt install linux-modules-extra-raspi`
+> Flannel configuration must be identical across all master nodes of the cluster. No configuration takes place on worker nodes.
+> For Raspberry Pi running Ubuntu OS check compatibility and if the additional setup is required to use VxLAN `sudo apt install linux-modules-extra-raspi`
 
 |  CLI Flag  |  Default |   Description  |
 |--------|----------|----------------|
@@ -36,7 +36,7 @@ During the setup a Flannel and bridge plugin is deployed. These plugins create n
 * `veth`: Creates a virtual ethernet pair where one end is plugged into the pod and other into cni0 bridge.
 
 **Flannel plugin:**
-* `flannel.1`: A VXLAN tunnel interface created by Flannel that encapsulates Pod traffic so it can be routed between nodes as if all Pods were on the same networ
+* `flannel.1`: A VXLAN tunnel interface created by Flannel that encapsulates Pod traffic so it can be routed between nodes as if all Pods were on the same network.
 
 > [!NOTE]
 > Instances are created only if pods that require cross node communication are deployed on the specific node.
