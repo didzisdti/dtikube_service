@@ -43,7 +43,7 @@ export default withMermaid(
                     text: 'Automation',
                     collapsed: false,
                     items: [
-                            {text: 'Ansible Node Setup', link: '/4-Automation/Ansible-Node-Setup' },
+                            {text: 'Ansible Node Setup', link: '/4-Automation/Ansible-node-setup' },
                             {text: 'ArgoCD GitOps', link: '/4-Automation/Argocd-Gitops' },
                             ],
                     },
@@ -59,7 +59,7 @@ export default withMermaid(
                     text: 'Networking',
                     collapsed: true,
                     items: [
-                            {text: 'K3s Default Networking', link: '/6-Networking/K3s-Networking' },
+                            {text: 'K3s Default Networking', link: '/6-Networking/k3s-Networking' },
                             {text: 'CNI: Flannel', link: '/6-Networking/Flannel' },                                                    
                             ],
                     },
