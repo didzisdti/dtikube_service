@@ -201,7 +201,7 @@ server=8.8.4.4                  # Google secondary
 
 ```
 
-### Static config: `/etc/dnsmasq./10-lan.conf`
+### Static config: `/etc/dnsmasq./90-static.conf`
 
 ```bash
 # -----------------------
@@ -215,6 +215,58 @@ dhcp-host=d8:3a:dd:ef:cd:e5,berry02,10.0.0.6,infinite            #2nd
 #Reserver static IP address for worker nodes
 dhcp-host=d8:3a:dd:e2:81:5c,berryw11,10.0.0.11,infinite          #3rd
 dhcp-host=88:a2:9e:29:a0:bb,berryw10,10.0.0.10,infinite          #5th
+
+# -----------------------
+# DNSMASQ CONFIG FOR Satic assignments
+# -----------------------
+
+# berryx   d8:3a:dd:46:68:28  10.0.0.1      4th 
+# berry01  d8:3a:dd:e2:85:37  10.0.0.5      1st
+# berry02  d8:3a:dd:ef:cd:e5  10.0.0.6      2nd
+# berryw11 d8:3a:dd:e2:81:5c  10.0.0.11     3rd
+# berryw12 88:a2:9e:29:a0:bb  10.0.0.12     5th
+
+
+##################################
+#         Static IPs             #
+##################################
+
+# gateway node
+host-record=berryx.dtikube.techinsights.com,10.0.0.1
+
+host-record=ntp.dtikube.techinsights.com,10.0.0.1
+host-record=dns.dtikube.techinsights.com,10.0.0.1
+
+# master nodes
+dhcp-host=d8:3a:dd:e2:85:37,berry01,10.0.0.5
+dhcp-host=d8:3a:dd:ef:cd:e5,berry02,10.0.0.6
+
+# Worker nodes
+dhcp-host=d8:3a:dd:e2:81:5c,berryw11,10.0.0.11
+dhcp-host=88:a2:9e:29:a0:bb,berryw12,10.0.0.12
+
+##################################
+#         Static DNS             #
+##################################
+
+# gateway node
+host-record=berryx.dtikube.techinsights.com,10.0.0.1
+
+host-record=ntp.dtikube.techinsights.com,10.0.0.1
+host-record=dns.dtikube.techinsights.com,10.0.0.1
+
+
+#master node
+host-record=berry01-master.dtikube.techinsights.com,10.0.0.5
+host-record=berry02-master.dtikube.techinsights.com,10.0.0.6
+
+#worker node
+host-record=berryw11-worker.dtikube.techinsights.com,10.0.0.11
+host-record=berryw12-worker.dtikube.techinsights.com,10.0.0.12
+
+
+#Services
+#host-record=grafana.dtikube.techinsights.com,10.0.0.12
 ```
 
 ### Config post-checks

@@ -20,7 +20,7 @@ Metrics Server is a lightweight Kubernetes component that collects resource usag
 
 ## Installing Metric Server
 
-Metric server is a default add-on that is deployed together with initial cluster setup. If however it is not present or is ommited through a configuration during installation then we can deploy it explicitly using Helm.
+Metric server is a default add-on that is deployed together with initial cluster setup. If however it is not present or is omitted through a configuration during installation then we can deploy it explicitly using Helm.
 
 Official Helm chart repo: [Metric Server](https://github.com/kubernetes-sigs/metrics-server/tree/master/charts/metrics-server)
 

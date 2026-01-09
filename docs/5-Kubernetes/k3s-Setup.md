@@ -18,7 +18,6 @@ K3s has two primary roles:
 * **`K3s-Agent:`** Runs worker node components: kubelet and kube-proxy
 
 
-
 ## Cluster Architecture configuration
 Cluster currently consists of 4 nodes and is planned to expand to meet the high availability setup in near future.
 
@@ -67,8 +66,8 @@ cat /etc/sysctl.d/k8s.conf
 cat /etc/modules-load.d/k8s.conf
 
 #Expected: br_netfilter
-
 ```
+
 **Update:**
 ```bash
 # Enable iptables kernel module
@@ -86,7 +85,6 @@ Running Kubernetes with active swap is not advised, it can affect pod stability 
 Swap can also adversely affect the lifespan of your MicroSD cards.
 
 **Checks:**
-
 ```bash
 # Check if swap is being allocated and used
 free -h
@@ -345,7 +343,6 @@ curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stabl
 # Deploy kubectl
 chmod 770 kubectl
 sudo mv kubectl /usr/local/bin/
-
 ```
 
 ### helm
@@ -440,5 +437,4 @@ sudo find / -path '*k3s*' 2>/dev/null \
   | sort \
   | uniq -c \
   | awk '{print $2, $1}'
-
 ```

@@ -17,7 +17,7 @@
 Cluster setup currently is operating under main admin user: `berryadmin` which controls all configuration, setup, start and stop or service and has elevated access rights.
 
 | Username | Role | Privileges | Authentication | Expiry |Used for |
-|----------|------|-------------|----------------|--------|---------|
+|----------|------|------------|----------------|--------|---------|
 | root | Superuser | root |  disabled | - | Linux |
 | berryadmin | Control user | sudo | Only SSH | - | Linux, Kubernetes |
 | ... | ...

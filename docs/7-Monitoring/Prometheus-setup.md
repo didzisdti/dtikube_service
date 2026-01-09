@@ -63,11 +63,11 @@ Open the hosts file in admin mode and add new line:
 <Cluster-node-IP> grafana.dtikube.techinsights.com
 ```
 
-This will redirect our session to our cluster and ingress will match this HTTP call with the rule we setup earlier. 
-Our basic setup is complete.
+This will redirect browser session to our cluster and ingress will look to match the HTTP call with the rule that was setup earlier. 
+Our basic setup is now complete.
 
 
-**TODO:** Advanced configuration with SSO 
+**TODO:** Advanced monitoring setup with alerting and SSO 
 
 <p align="center">
     <img alt="pikube-logo" src="../Graphics/under-construction.svg" width="40%">

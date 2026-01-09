@@ -19,7 +19,6 @@ The project consists of following pillars:
 
 
 
-
 ## :compass: Project Guiding Principles
 1. **Start "Vanilla":** Learn from failure, succeed with creating something that works and move on to the next step. Avoid doing too many things and finishing none.
 2. **Maintain Frugal Setup:** Maximise efficiency of resources. Infrastructure costs, server resource utilisation, manage storage requirements.  

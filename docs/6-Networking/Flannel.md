@@ -21,7 +21,7 @@ During K3s setup there are several options to customise our CNI setup.
 > For Raspberry Pi running Ubuntu OS check compatibility and if the additional setup is required to use VxLAN `sudo apt install linux-modules-extra-raspi`
 
 |  CLI Flag  |  Default |   Description  |
-|--------|----------|----------------|
+|------------|----------|----------------|
 | `--flannel-backend=` | `vxlan` | Choice of Flannel networking backend. Available values: `vxlan`,`none`,`host-gw`,`wireguard-native`,`ipsec`|
 | `--cluster-cidr=` | `10.42.0.0/16` | IP address range from which Kubernetes assigns Pod IPs. Available values: Any valid CIDR | 
 | `-service-cidr=` | `10.43.0.0/16` | IP address range from which Kubernetes assigns Service IPs. Available values: Any valid CIDR | 

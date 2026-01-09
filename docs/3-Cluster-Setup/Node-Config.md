@@ -44,16 +44,9 @@ users:
     - ssh-ed25519 AAAAC3NzaC....TEMPLATE #Replace with your public key
   sudo: ALL=(ALL) NOPASSWD:ALL
 
-
 # System Updates
 package_update: true
 package_upgrade: true
-
-# Essential Packages
-packages:
-  - curl
-  - wget
-  - git
 
 # Inherited security settings
 ssh_pwauth: false

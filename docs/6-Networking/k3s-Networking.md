@@ -14,7 +14,7 @@ Assumption taken that cluster is installed without any modifications or substitu
 Handles pod-to-pod networking and IP address allocation across the cluster, enabling communication between containers.
 * Default: **Flannel**
   * Operates pod-to-pod networking via overlay across nodes, VXLAN as default. 
-  * Auto creates required network interfaces and allocaes IP's to pods.
+  * Auto creates required network interfaces and allocates IP's to pods.
   * Resource smart, doesn't create overhead if there are no pod-to-pod deployments on a given node.
   * Alternative options: `Calico`, `Cilium`, 
   * Additional info: [CNI: Flannel](../6-Networking/Flannel.html)
@@ -28,7 +28,7 @@ Manages HTTP/HTTPS routing from outside the cluster to services, often including
   * Alternative options: `NGINX`, `HAProxy`
   * Additional info: TBC
 
-### DNS Rersoltion
+### DNS Resolution
 Provides name resolution for services and pods, enabling service discovery within the cluster.
 * Default: **CoreDNS**
   * Enables name based service discovery within the cluster.
@@ -38,7 +38,7 @@ Provides name resolution for services and pods, enabling service discovery withi
 ### Service Load Balancer
 Distributes external traffic to the appropriate service endpoints across nodes in the cluster.
 * Default: **Klipper-LB**
-  * Resource smart lighweight service load balancer but limited by design
+  * Resource smart lightweight service load balancer but limited by design
   * Automatically handles all service with type: `LoadBalancer`
   * Alternative options: `MetalLB`, `Cilium LB`, `Cloud provider LB`
 
@@ -53,7 +53,7 @@ Defines how services are exposed internally or externally, providing stable endp
 ### Traffic Proxy / Forwarding
 Forwards service traffic to backend pods and implements cluster networking rules for load balancing and routing.
 * Default: **kube-proxy**
-  * Forward traffic from LoadBalancer services to endppint utilising ClusterIP VIPs
+  * Forward traffic from LoadBalancer services to endpoint utilising ClusterIP VIPs
   * "Cluster aware" updates rules in real time without need for forced reloads.
   * Alternative options: `Cilium (eBPF)`,`Calico eBPF`,`Service mesh`
 

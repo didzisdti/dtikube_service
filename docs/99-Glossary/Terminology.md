@@ -26,5 +26,6 @@ Through the project documentation and beyond in additional reading material, you
 | **VxLAN** - Virtual eXtensible LAN | VXLAN is a network encapsulation technology that lets you create a virtual Layer-2 network on top of a Layer-3 (IP) network. Simply put, its a virtual network across machines and data centers using IP packets.|  | CNI |
 | **IPAM** - IP Address Management | A is the system responsible for allocating and managing IP addresses in a network.|  |Networking |
 | **MTU** - Maximum Transmission Unit | In networking (including Docker and Kubernetes), MTU is the largest size (in bytes) of a packet that can be sent over a network interface without being fragmented.| |Networking |
-| **VTEP** -VXLAN Tunnel Endpoint | The host that encapsulates and decapsulates VXLAN traffic| |Networking | 
+| **VTEP** - VXLAN Tunnel Endpoint | The host that encapsulates and decapsulates VXLAN traffic| |Networking | 
+| **CRD** - Custom Resource Definition | A way to extend the Kubernetes API by defining your own resource types, just like built-in ones such as Pod, Service, or Deployment| New kind of resource examples: `Database`, `Backup`, `Application`|Kubernetes | 
 

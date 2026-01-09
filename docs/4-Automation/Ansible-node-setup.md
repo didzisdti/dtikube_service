@@ -27,7 +27,7 @@ Ansible offers several options for setting up the control node
 * Windows environment with Windows Subsystem for Linux (WSL)
 
 
-WSL is already chosen for other activities, the Ansible will also reside on WSL and will utilise Execution Environment (EE).
+WSL is already chosen for other activities, the Ansible will also reside on WSL.
 
 ## :memo: Ansible Setup Guide
 

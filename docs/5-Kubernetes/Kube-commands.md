@@ -23,7 +23,7 @@ ps aux | grep containerd | grep k3s
 
 ### Service config
 ```bash
-# All available "kinds"
+# All available kube resources
 kubectl api-resources -o wide
 
 # CHeck containerd config

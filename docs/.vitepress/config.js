@@ -43,7 +43,8 @@ export default withMermaid(
                     text: 'Automation',
                     collapsed: false,
                     items: [
-                            {text: 'Ansible Node Setup', link: '/4-Automation/Ansible-node-setup' },
+                            {text: 'Ansible Node Setup', link: '/4-Automation/Ansible-Node-Setup' },
+                            {text: 'ArgoCD GitOps', link: '/4-Automation/Argocd-Gitops' },
                             ],
                     },
                     {
@@ -51,14 +52,14 @@ export default withMermaid(
                     collapsed: true,
                     items: [
                             {text: 'K3s Setup', link: '/5-Kubernetes/k3s-Setup' },
-                            {text: 'Kube Commands', link: '/5-Kubernetes/Kube-commands' },                                                    
+                            {text: 'Kube Commands', link: '/5-Kubernetes/Kube-Commands' },                                                    
                             ],
                     },
                     {
                     text: 'Networking',
                     collapsed: true,
                     items: [
-                            {text: 'K3s Default Networking', link: '/6-Networking/k3s-Networking' },
+                            {text: 'K3s Default Networking', link: '/6-Networking/K3s-Networking' },
                             {text: 'CNI: Flannel', link: '/6-Networking/Flannel' },                                                    
                             ],
                     },
