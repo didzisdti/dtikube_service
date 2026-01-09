@@ -52,7 +52,7 @@ export default withMermaid(
                     collapsed: true,
                     items: [
                             {text: 'K3s Setup', link: '/5-Kubernetes/k3s-Setup' },
-                            {text: 'Kube Commands', link: '/5-Kubernetes/Kube-Commands' },                                                    
+                            {text: 'Kube Commands', link: '/5-Kubernetes/Kube-commands' },                                                    
                             ],
                     },
                     {
