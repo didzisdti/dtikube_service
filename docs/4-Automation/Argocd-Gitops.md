@@ -39,7 +39,7 @@ helm repo add argo https://argoproj.github.io/argo-helm
 helm repo update
 ```
 
-### Installing
+### Deploying
 
 ```bash
 # Deploying AgroCD in agrocd namespace
@@ -47,10 +47,14 @@ helm install argo argo/argo-cd \
   -n argocd \
   -f argocd-values.yaml
 ```
-
+Validation after initial deploymeny is complete
 ```bash
 # Check pods
 kubectl get pods -n argocd
+
+# Obtain Secret for UI 
+kubectl get secret argocd-initial-admin-secret -n argocd \
+  -o jsonpath="{.data.password}" | base64 -d
 
 # Useful summary check post deployment
 kubectl get deploy,svc,ingress argo-cd \

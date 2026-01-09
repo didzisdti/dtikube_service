@@ -62,6 +62,7 @@ Controls pod-to-pod and pod-to-external traffic at the network level by defining
 * Default: **Not Enabled**
   * Setup Option: `Calico`,`Cilium`
 
+
 ### Noteworthy Ports
 
 Inbound Rules for K3s Nodes

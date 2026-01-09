@@ -41,6 +41,7 @@ sudo apt install -y \
   ansible 
 ```
 
+
 ### Creating Ansible Project Directory
 ```bash
 # Create project directory structure
