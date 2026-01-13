@@ -6,6 +6,10 @@
 
 # {{ $frontmatter.title }}
 
+<p align="center">
+    <img alt="pikube-logo" src="../Graphics/chip.svg" width="20%">
+    <img alt="pikube-logo" src="../Graphics/raspberry-pi.svg" width="25%">    
+</p>
 
 ## Custer Setup
 The cluster currently consists of Raspberry Pi nodes with similar hardware settings.

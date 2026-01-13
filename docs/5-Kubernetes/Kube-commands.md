@@ -6,6 +6,10 @@
 
 # {{ $frontmatter.title }}
 
+<p align="center">
+    <img alt="pikube-logo" src="../Graphics/cli.svg" width="25%">
+</p>
+
 Cluster management often requires inspection of various setup layers. in order to achieve this objective some more commenly use commands are detailed in this article.
 
 ## Services 

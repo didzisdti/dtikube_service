@@ -57,14 +57,14 @@ kubectl -n monitoring get deploy,svc,ingress monitoring-grafana -o wide
 ```
 
 
-To access the Grafana weblink one additional configuration is required on the windows laptop in path: `C:\Windows\System32\drivers\etc\hosts`
+To access the Grafana URL from the control node one additional configuration is required on the windows laptop in path: `C:\Windows\System32\drivers\etc\hosts`
 Open the hosts file in admin mode and add new line:
 ```
 <Cluster-node-IP> grafana.dtikube.techinsights.com
 ```
 
 This will redirect browser session to our cluster and ingress will look to match the HTTP call with the rule that was setup earlier. 
-Our basic setup is now complete.
+Basic setup is now complete.
 
 
 **TODO:** Advanced monitoring setup with alerting and SSO 
