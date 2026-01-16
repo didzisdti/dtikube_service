@@ -43,56 +43,41 @@ Since no active project is yet running, test values are provided enabling setup 
 ```bash
 configs:
   params:
-    server.insecure: true               # Allow Argo CD server to serve HTTP
-    application.namespaces: "*"         # Manage apps in all namespaces
+    server.insecure: true
+    application.namespaces: "*"
 
   cm:
-    timeout.reconciliation: 180s        # Sets the default timeout for app reconciliation
+    timeout.reconciliation: 180s
 
   rbac:
-    policy.default: role:admin          # Default admin role 
+    policy.default: role:admin
 
 server:
-  replicas: 1                           # Nr. of pods
-  extraArgs:
-    - --insecure                        # Extra argument passed to the server, in this case allow insecure HTTP
-  service:
-    type: ClusterIP                     # Expose server as ClusterIP service (internal to cluster)
-    port: 80                            # The port Argo CD server will listen on inside the cluster
   ingress:
-    enabled: true                       # Create an Ingress to expose Argo CD externally
-    ingressClassName: traefik           # Use Traefik Ingress controller
+    enabled: true
+    ingressClassName: traefik
+    hostname: argocd.dtikube.techinsights.com
     hosts:
-      - argocd.dtikube.techinsights.com     # hostname for URL access
-    paths:
-      - /                               # Path prefix for the Ingress
-    annotations:
-      traefik.ingress.kubernetes.io/router.entrypoints: web  # Tell Traefik to use the 'web' entrypoint (port 80)
-
-controller:
-  replicas: 1                           # Number of Argo CD application controller pods (handles reconciliation of apps)
-
-repoServer:
-  replicas: 1                           # Nr. of repository server pods (used to fetch manifests from git repos)
+      - argocd.dtikube.techinsights.com
 
 applicationSet:
-  enabled: true                          # allows dynamic creation of apps from templates
-  replicas: 1                            # Nr. of ApplicationSet controller pods
+  enabled: true
+  replicas: 1
 
 dex:
-  enabled: false                         # Disable Dex (identity provider) since we are not yet using SSO/OAuth
+  enabled: false
 
 redis:
-  enabled: true                          # Deploy an internal Redis instance for Argo CD (used for caching and notifications)
+  enabled: true
 
 notifications:
-  enabled: false                         # Disable notifications (email, etc.)
+  enabled: false
 
 metrics:
-  enabled: false                         # Disable metrics (Prometheus metrics server)
+  enabled: false
 ```
 
-### Deploying
+### Deployment
 
 ```bash
 # Deploying AgroCD in agrocd namespace
@@ -133,5 +118,232 @@ Basic setup is now complete.
     <img alt="pikube-logo" src="../Graphics/sample_argocd.png" width="90%">
 </p>
 
+## From Git Repo to Cluster
+There are various ways to deploy applications in the Kubernetes cluster utilising ArgoCD. Natively ArgoCD provides CLI and UI allowing for easier management of deployments.
 
-TODO
+DTIKube cluster will utilise:
+* Plain directory based application deployment
+* App of apps based deployment
+
+### Directory Based Deployment
+This type of deployment uses manifest files from a specific directory within a Git repository with filetype (.yml, .yaml, and .json). It is easy to apply and will serve as initial setup for the first apps.
+
+#### Setup 
+The application artefacts stored in the Git repository and the setup outlines both directory structure and manifest examples with detailed description.
+
+**Example Structure:**
+```
+repo/
+└── apps/
+    └── directory-app/
+        ├── deployment.yaml
+        ├── service.yaml
+        ├── ingress.yaml
+        └── application.yaml
+```
+
+**Example manifests:**
+
+`deployment.yaml`
+Defines how the application Pods are created, updated, and scaled.
+```bash
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: directory-app
+  namespace: demo
+  labels:
+    app.kubernetes.io/name: directory-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: directory-app
+  template:
+    metadata:
+      labels:
+        app: directory-app
+    spec:
+      containers:
+        - name: directory-app
+          image: nginx:stable-alpine # sample "hello world"
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+```
+**Config Info:**
+* **`metadata.name`** Name of the deployment.
+* **`metadata.namespace`** Namespace where deployment is created.
+* **`metadata.labels`** Standard Kubernetes recommended label.
+* **`spec.selector.matchLabels.app`** Label selector to match Pods managed by this Deployment.
+* **`spec.template.metadata.labels.app`** Labels applied to Pods (must match selector).
+* **`spec.template.spec.containers.name`** Name of the container.
+* **`spec.template.spec.containers.image`** Target image that is used in deployment.
+* **`spec.template.spec.ports.containerPort`** Port exposed by the container.
+* **`spec.template.spec.resource.requests`** Assign resource limits for the given container.
+
+
+`service.yaml`
+Provides a stable network endpoint to access the application Pods.
+```bash
+apiVersion: v1
+kind: Service
+metadata:
+  name: directory-app
+  namespace: demo
+spec:
+  selector:
+    app: directory-app
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+```
+**Config Info:**
+* **`metadata.name`** Name of the service.
+* **`metadata.namespace`** Namespace where Service is created.
+* **`spec.selector.app.`** Services the Pods with label app=directory-app.
+* **`spec.ports.port.`** Port exposed by the Service.
+* **`spec.ports.targetPort.`** Port that the container traffic is forwarded to.
+
+
+`ingress.yaml`
+Exposes the application to external users via HTTP/HTTPS.
+```bash
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: directory-app
+  namespace: demo
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: directory-app.dtikube.techinsights.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: directory-app
+                port:
+                  number: 80
+```
+**Config Info:**
+* **`metadata.name`** Name of the ingress.
+* **`metadata.namespace`** Namespace where the Ingress is created.
+* **`metadata.annotations`** Entry point to Ingress
+* **`spec.ingressClassName`** Choice of ingress controller (Match your cluster setup).
+* **`spec.rules.host`** DNS host for routing traffic.
+* **`spec.rules.http.paths.path`** URL path to match.
+* **`spec.rules.http.paths.pathType`** Match all paths with this prefix.
+* **`spec.rules.http.paths.backend`** Backend service details name and port.
+
+`application.yaml`
+Argo CD instruction how to deploy and manage the application using GitOps.
+```bash
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: directory-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/didzisdti/sandbox
+    targetRevision: main
+    path: apps/directory-app
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: demo  
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+```
+
+**Config Info:**
+* **`kind`** Declares an Argo CD managed CRD.
+* **`metadata.name`** Name of the Argo CD Application.
+* **`metadata.namespace`** Namespace where Argo CD is installed.
+* **`spec.source.repoURL`** Your target Git repository containing the application.
+* **`spec.source.path`** Directory in the Git repository.
+* **`spec.source.targetRevision`** Specific Git tag, branch, or commit that Argo will trace.
+* **`spec.destination.namespace`** Target namespace where the application will be deployed.
+* **`spec.destination.server`** Target cluster for deployment. https://kubernetes.default.svc = local cluster.
+* **`spec.syncPolicy.automated`** Optional config for automatic synchronization, pruning and self-healing.
+
+#### Bootstrap to Cluster
+Use the application.yaml directly from the repository or pull it locally on the cluster.
+If using remote one, ensure to specify RAW .yaml file path.
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/didzisdti/sandbox/main/apps/directory-app/application.yaml \
+  -n argocd
+```
+
+#### Confirm Deployment
+The expected outcome of above deployment is a welcome page for NGINX accessible in the control nodes browser, confirming that the deployment was successful.
+
+1. Check ArgoCD URL (Healthy, Synced)
+```
+http://argocd.dtikube.techinsights.com/
+```
+
+2. Check the Pods on Cluster are running
+```bash
+kubectl get pods -n demo
+```
+
+3. Check Ingress is set
+```bash
+kubectl get ingress -n demo
+```
+
+4. Set URL mapping in Windows 
+```
+C:\Windows\System32\drivers\etc\hosts
+```
+
+5. Open URL in your browser and view the welcome page. 
+
+### App of Apps Deployment
+
+
+## Config Removal
+Should the need arise to remove argocd setup or re-create it from scratch followings steps should be applied.
+
+```bash
+# Remove Argo CD from the cluster
+helm uninstall argo -n argocd
+
+# Remove any app installed
+kubectl delete application <app-name> -n <namespace>
+
+# Remove CRD's created during setup
+kubectl delete crd applications.argoproj.io applicationsets.argoproj.io appprojects.argoproj.io
+
+# Remove namespace (ensures all CRD's secrets, etc. are removed)
+kubetl delete namespace argocd
+```
+**Check setup is removed:**
+```bash
+kubectl get ns argocd
+kubectl get crd | grep argoproj
+kubectl get applications -A
+kubectl get applicationsets -A
+```
+
+
+### Secure GitOps
+
+TO DO in next phase!
+
