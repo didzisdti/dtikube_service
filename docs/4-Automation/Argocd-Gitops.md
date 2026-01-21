@@ -126,7 +126,7 @@ DTIKube cluster will utilise:
 * App of apps based deployment
 
 ### Directory Based Deployment
-This type of deployment uses manifest files from a specific directory within a Git repository with filetype (.yml, .yaml, and .json). It is easy to apply and will serve as initial setup for the first apps.
+This type of deployment uses manifest files from a specific directory within a Git repository with filetype (.yml, .yaml, and .json). It is easy to apply and will serve as initial setup for the first app creation.
 
 #### Setup 
 The application artefacts stored in the Git repository and the setup outlines both directory structure and manifest examples with detailed description.
@@ -282,7 +282,7 @@ spec:
 * **`spec.syncPolicy.automated`** Optional config for automatic synchronization, pruning and self-healing.
 
 #### Bootstrap to Cluster
-Use the application.yaml directly from the repository or pull it locally on the cluster.
+Apply the application.yaml directly from the repository or pull it locally on the cluster.
 If using remote one, ensure to specify RAW .yaml file path.
 
 ```bash
@@ -314,9 +314,192 @@ C:\Windows\System32\drivers\etc\hosts
 ```
 
 5. Open URL in your browser and view the welcome page. 
+```bash
+http://directory-app.dtikube.techinsights.com/
+```
 
 ### App of Apps Deployment
+A hiehierarchical deployment model where one app ("Parent") and conists of multiple apps ("children"). In such scenario Argo CD acts as deployment orchestrator, providing layers of responsibility, enabling scalability and safety boundaries.
+* **`Parent app`** Defines what and how many applications exist.
+* **`Child app`** Defines how each application is deployed.
+* **`Workload`** Actual Kubernetes resources.
 
+#### Setup
+The Git repository directory structure and manifest examples with detailed description. For additional config info, check previous section 
+
+
+```
+repo/
+├── root-app.yaml                # Parent "App of Apps"
+├── apps2/
+│   ├── frontend/
+│   │   └── application.yaml
+│   └── backend/
+│       └── application.yaml
+└── services/
+    ├── frontend/
+    │   ├── deployment.yaml
+    │   ├── service.yaml
+    │   └── kustomization.yaml
+    └── backend/
+        ├── deployment.yaml
+        ├── service.yaml
+        └── kustomization.yaml
+```
+
+`root-app.yaml`
+Defines the "Parent" in App of Apps setup and discovers all new "Child" apps under /app2 directory.
+
+```bash
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: platform-root
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    directory:
+      recurse: true
+    repoURL: https://github.com/didzisdti/sandbox
+    targetRevision: main
+    path: apps2
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: demo
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+```
+**Config Info:**
+* **`spec.source.directory.recurse`** Recursively include all manifests under the path
+
+`apps2/frontend/application.yaml`
+How to deploy one logical workload and which directory to hook into.
+```bash
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: backend
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/didzisdti/sandbox
+    targetRevision: main
+    path: services/backend
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: demo
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+```
+**Config Info:**
+* **`metadata.annotations...sync-wave`** Sync order relative to other applications
+
+
+`services/frontend/deployment.yaml`
+Defines how the application Pods are created, updated, and scaled.
+```bash
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: nginx:1.25
+          ports:
+            - containerPort: 80
+```
+
+`services/frontend/service.yaml`
+Provides a stable network endpoint to access the application Pods.
+```bash
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  selector:
+    app: backend
+  ports:
+    - port: 80
+      targetPort: 80
+```
+
+`services/frontend/kustomization.yaml`
+Defines a Kustomize entry point that groups related Kubernetes manifests so Argo CD can deploy them together.
+```bash
+resources:
+  - deployment.yaml
+  - service.yaml
+```
+
+#### Bootstrap to Cluster
+
+The app of apps setup requires only one manifest to rollout the entire setup of apps and dependancies. Powerfull in managing large scale setups with multiple apps and platform dependancies. Strongly encourages sync waves and ordering of content deployment.
+**Best Practice:**
+* **Wave -1** CRDs *(rollouts.argoproj.io, issuers.cert-manager.io, certificates.cert-manager.io)*
+* **Wave 0** Platform controllers *(Ingress controller, cert-manager, Secrets from Vault)*
+* **Wave 1** Shared services *(Observability stack, Logging stack, Service mesh)*
+* **Wave 2** Workloads *(Back-end, Front-end apps, stateful workloads)*
+
+Apply the parent app application.yaml directly from the repository or pull it locally on the cluster. Ensure to specify RAW .yaml file path.
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/didzisdti/sandbox/main/root-app.yaml \
+  -n argocd
+```
+
+#### Confirm Deployment
+
+1. Check ArgoCD URL (Healthy, Synced)
+```
+http://argocd.dtikube.techinsights.com/
+```
+
+2. Check the Pods on Cluster are running
+```bash
+kubectl get pods -n demo
+```
+
+3. Check application status
+```bash
+kubectl get applications -n argocd
+```
+
+4. Check if both frontend and backend are reachable 
+
+```bash
+kubectl run tmp --rm -it --image=curlimages/curl -n demo   -- curl http://frontend
+kubectl run tmp --rm -it --image=curlimages/curl -n demo   -- curl http://backend
+```
+
+5. Check services
+```bash
+kubectl get svc -n demo
+```
 
 ## Config Removal
 Should the need arise to remove argocd setup or re-create it from scratch followings steps should be applied.

@@ -8,7 +8,7 @@
 
 <p align="center">
     <img alt="pikube-logo" src="../Graphics/chip.svg" width="20%">
-    <img alt="pikube-logo" src="../Graphics/raspberry-pi.svg" width="25%">    
+    <img alt="pikube-logo" src="../Graphics/raspberry-pi.svg" width="20%">    
 </p>
 
 ## Custer Setup

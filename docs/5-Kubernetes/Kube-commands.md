@@ -17,7 +17,7 @@ Acquire details of your K3s cluster services, check and manage their config and 
 
 ### Cluster services
 ```bash
-# Check service status post install
+# Check service status after install
 sudo systemctl status k3s
 sudo systemctl status k3s-agent
 
@@ -30,7 +30,16 @@ ps aux | grep containerd | grep k3s
 # All available kube resources
 kubectl api-resources -o wide
 
-# CHeck containerd config
+# List all available services
+kubectl get service -A
+
+# List all configured ingress 
+kubectl get ingress -A
+
+# List deployments running in a specific namespace
+kubectl get deployments -n <namespace>
+
+# Check containerd config (run on master nodes)
 sudo grep SystemdCgroup /var/lib/rancher/k3s/agent/etc/containerd/config.toml
 
 # Silence coredns warning output
@@ -38,8 +47,6 @@ sudo mkdir -p /etc/coredns/custom
 sudo touch /etc/coredns/custom/dummy.override
 sudo touch /etc/coredns/custom/dummy.server
 
-# List deployments running in a specific namespace
-kubectl get deployments -n <namespace>
 ```
 
 ### Events and logs
