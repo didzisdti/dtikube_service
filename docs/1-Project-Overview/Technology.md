@@ -21,18 +21,27 @@ Target stack for our first milestone: Kube platform activation
 | **Network**   | <img src="../Graphics/flannel.svg" width="15%" style="display:inline; vertical-align:middle;"> [Flannel](https://github.com/flannel-io/flannel) | Kubernetes Pod-to-Pod Container Network Interface (CNI) |
 
 
-Target stack 2nd milestone:
+Target stack 2nd observability:
 | **Purpose** |**Technology** | **Description** |
 |---------|------------|-------------|
 | **Observability**   | <img src="../Graphics/prometheus.svg" width="15%" style="display:inline; vertical-align:middle;"> [Prometheus](https://prometheus.io/) | Monitoring and alerting |
+| **Observability**   | <img src="../Graphics/loki.svg" width="15%" style="display:inline; vertical-align:middle;"> [Loki](https://grafana.com/oss/loki/) | Horizontally scalable, highly available, multi-tenant log aggregation |
+| **Observability**   | <img src="../Graphics/tempo.svg" width="15%" style="display:inline; vertical-align:middle;"> [Tempo](https://grafana.com/oss/tempo/) | High-scale distributed tracing backend |
+
+...
+
+Target stack 3rd security
+| **Purpose** |**Technology** | **Description** |
+|---------|------------|-------------|
 | **Security**   | <img src="../Graphics/cert-manager.svg" width="15%" style="display:inline; vertical-align:middle;"> [Cert-Manager](https://cert-manager.io/) | Monitoring and alerting |
 | **Authentication**   | <img src="../Graphics/keycloak.svg" width="15%" style="display:inline; vertical-align:middle;"> [KeyCloak](https://www.keycloak.org/) | Identity and Access Management |
 | **Authentication**   | <img src="../Graphics/oauth2-proxy.svg" width="15%" style="display:inline; vertical-align:middle;"> [OAuth2-proxy](https://oauth2-proxy.github.io/oauth2-proxy/) | Reverse proxy for adding authentication to applications |
-| **Storage**   | <img src="../Graphics/longhorn.svg" width="15%" style="display:inline; vertical-align:middle;"> [Longhorn](https://longhorn.io/) | Cloud-native distributed block storage|
-...
 
-Target stack 3rd
-focus on additional observability, security and backup management
+
+Target stack 4 Ressilience
+| **Purpose** |**Technology** | **Description** |
+|---------|------------|-------------|
+| **Storage**   | <img src="../Graphics/longhorn.svg" width="15%" style="display:inline; vertical-align:middle;"> [Longhorn](https://longhorn.io/) | Cloud-native distributed block storage|
 
 
 

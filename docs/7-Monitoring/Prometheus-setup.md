@@ -27,7 +27,7 @@ helm search repo prometheus-community
 helm repo update
 ```
 
-Creating manifest before deployment in grafana-values.yml to ensure that when we use `http://grafana.dtikube.techinsights.com` in our browser ther is an ingress rule that will forward the traffic to the Graana Service (ClusterIP).
+Creating manifest before deployment in grafana-values.yml to ensure that when we use `http://grafana.dtikube.techinsights.com` in our browser there is an ingress rule that will forward the traffic to the Graana Service (ClusterIP).
 
 ```yaml
 grafana:

@@ -515,7 +515,7 @@ kubectl delete application <app-name> -n <namespace>
 kubectl delete crd applications.argoproj.io applicationsets.argoproj.io appprojects.argoproj.io
 
 # Remove namespace (ensures all CRD's secrets, etc. are removed)
-kubetl delete namespace argocd
+kubectl delete namespace argocd
 ```
 **Check setup is removed:**
 ```bash

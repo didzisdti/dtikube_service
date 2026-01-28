@@ -5,7 +5,7 @@ layout: home
 hero:
   name: Kube Platform 
   text: Setup Guide & Documentation 
-  tagline: Deploy, manage, and scale your Pi-based K3s cluster with ease
+  tagline: Create, deploy, manage, and scale your K3s cluster with ease
   image: 
     src: /education.png
 
