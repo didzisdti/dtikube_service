@@ -10,6 +10,7 @@
     <div style="margin-right: 10px;"> 
         <img src="../Graphics/chip.svg" alt="Raspberry Pi" width="120" />
     </div>
+        <div style="flex: 0 0 auto;">
         <img src="../Graphics/raspberry-pi.svg" alt="Single Board Computing" width="120" />
     </div>
 </div>
